@@ -1,20 +1,49 @@
 ---
+import { ui } from '@/i18n/ui'
 import Layout from '@/layouts/Layout.astro'
+import { getPageInfo } from '@/utils/page'
+
+const { currentLang, getLocalizedPath } = getPageInfo(Astro.url.pathname)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 ---
 
 <Layout>
   <!-- Decorative Line -->
   <div class="uno-decorative-line" />
-  <!-- Page Not Found -->
-  <h3 class="mt--1.3 flex flex-col text-8 c-primary font-bold leading-1.2em font-navbar lg:text-9">
-    <span>PAGE</span>
-    <span>NOT</span>
-    <span>FOUND</span>
-  </h3>
-  <p class="mt-3.6 flex flex-col text-3.6 leading-1.4em font-navbar lg:(mt-4 text-4)">
-    <span>It looks like the page you're looking for</span>
-    <span>does not exist or has been moved.</span>
-  </p>
-  <!-- Unused Div -->
-  <div class="" />
+
+  <!-- A blank sheet: a faint numeral, one line of ink, a way back. -->
+  <section class="not-found">
+    <p class="not-found-numeral" aria-hidden="true">404</p>
+    <h1 class="text-7 c-primary font-bold font-navbar cjk:tracking-wider lg:text-8">
+      {currentUI.notFoundTitle}
+    </h1>
+    <p class="mt-3 text-3.6 c-secondary font-navbar lg:text-4">
+      {currentUI.notFoundText}
+    </p>
+    <a
+      class="highlight-hover mt-8 inline-block text-3.6 c-secondary font-navbar after:bottom-0.35em hover:c-primary lg:text-4"
+      href={getLocalizedPath('/')}
+    >
+      ← {currentUI.backHome}
+    </a>
+  </section>
 </Layout>
+
+<style>
+  .not-found-numeral {
+    margin: -0.15em 0 0.1em;
+    font-family: 'Snell-Black', ui-serif, Georgia, serif;
+    font-size: clamp(5rem, 18vw, 9rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ink-very-light);
+    opacity: 0.35;
+  }
+
+  html:not(.reduce-motion) .not-found > * {
+    animation: ink-in var(--dur-ink) var(--ease-ink) both;
+  }
+  html:not(.reduce-motion) .not-found > :nth-child(2) { animation-delay: 0.12s; }
+  html:not(.reduce-motion) .not-found > :nth-child(3) { animation-delay: 0.2s; }
+  html:not(.reduce-motion) .not-found > :nth-child(4) { animation-delay: 0.28s; }
+</style>
