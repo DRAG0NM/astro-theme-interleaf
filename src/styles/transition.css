@@ -3,23 +3,34 @@
  * shares the same breath: quick to start, long and quiet to settle. */
 :root {
   --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-wash: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-ink: 0.8s;
   --dur-hover: 0.5s;
   --stagger: 0.045s;
 }
 
-/* Theme Toggle: Ink Wash >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* The new theme spreads over the page like a wash with a soft, feathered
- * edge instead of a hard clip line. Dark spreads down, light lifts up. */
-@keyframes ink-wash {
+/* Theme Toggle: Ink Drop >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* To dark: a drop of ink falls on the toggle and bleeds across the paper
+ * with a ragged, fibrous edge. To light: the ink dries back into the drop.
+ * Button.astro sets --ink-x / --ink-y (drop centre) and --ink-size (a blob
+ * large enough to cover the farthest corner). */
+:root {
+  /* Turbulence-displaced disc: the edge looks absorbed by paper fibres.
+   * Its solid core is ~30% of the image, so --ink-size is ~3.4x the radius. */
+  --ink-blob: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='f' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='3' seed='11'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='20' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='0.9'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='70' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+@keyframes ink-spread {
   from {
-    -webkit-mask-position: 0 var(--wash-from);
-    mask-position: 0 var(--wash-from);
+    -webkit-mask-size: 0 0;
+    mask-size: 0 0;
+    -webkit-mask-position: var(--ink-x) var(--ink-y);
+    mask-position: var(--ink-x) var(--ink-y);
   }
   to {
-    -webkit-mask-position: 0 var(--wash-to);
-    mask-position: 0 var(--wash-to);
+    -webkit-mask-size: var(--ink-size) var(--ink-size);
+    mask-size: var(--ink-size) var(--ink-size);
+    -webkit-mask-position: calc(var(--ink-x) - var(--ink-size) / 2) calc(var(--ink-y) - var(--ink-size) / 2);
+    mask-position: calc(var(--ink-x) - var(--ink-size) / 2) calc(var(--ink-y) - var(--ink-size) / 2);
   }
 }
 
@@ -30,42 +41,82 @@
   }
 }
 
+::view-transition-old(theme-toggle-transition),
 ::view-transition-new(theme-toggle-transition) {
-  z-index: 99;
-  -webkit-mask-image: linear-gradient(var(--wash-dir), #000 46%, transparent 54%);
-  mask-image: linear-gradient(var(--wash-dir), #000 46%, transparent 54%);
-  -webkit-mask-size: 100% 250%;
-  mask-size: 100% 250%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-
   /* Override Astro's wildcard reduced-motion reset only for the explicit
    * theme transition. Button.astro still respects the motion preference. */
-  animation: ink-wash 0.9s var(--ease-wash) both !important;
+  animation: none !important;
+  mix-blend-mode: normal;
 }
-::view-transition-old(theme-toggle-transition) {
+
+/* Ink bleeds out: the new (dark) page spreads over the old one. */
+html[data-theme-changing='to-dark']::view-transition-new(theme-toggle-transition) {
+  z-index: 99;
+  -webkit-mask-image: var(--ink-blob);
+  mask-image: var(--ink-blob);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ink-spread 1.15s cubic-bezier(0.2, 0.7, 0.25, 1) both !important;
+}
+html[data-theme-changing='to-dark']::view-transition-old(theme-toggle-transition) {
   z-index: -1;
-  animation: none;
+}
+
+/* Ink dries back: the old (dark) page stays on top and shrinks into the drop. */
+html[data-theme-changing='to-light']::view-transition-old(theme-toggle-transition) {
+  z-index: 99;
+  -webkit-mask-image: var(--ink-blob);
+  mask-image: var(--ink-blob);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ink-spread 0.95s cubic-bezier(0.55, 0, 0.75, 0.3) reverse both !important;
+}
+html[data-theme-changing='to-light']::view-transition-new(theme-toggle-transition) {
+  z-index: -1;
 }
 
 @supports not ((mask-image: none) or (-webkit-mask-image: none)) {
-  ::view-transition-new(theme-toggle-transition) {
+  html[data-theme-changing]::view-transition-old(theme-toggle-transition) {
+    z-index: -1;
+    animation: none !important;
+  }
+  html[data-theme-changing]::view-transition-new(theme-toggle-transition) {
+    z-index: 99;
     clip-path: inset(0 0 0 0);
+    -webkit-mask-image: none;
+    mask-image: none;
     animation: reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 }
 
 html.dark {
   --from: 0 0 100% 0;
-  --wash-dir: to bottom;
-  --wash-from: 100%;
-  --wash-to: 0%;
 }
 html:not(.dark) {
   --from: 100% 0 0 0;
-  --wash-dir: to top;
-  --wash-from: 0%;
-  --wash-to: 100%;
+}
+
+/* Theme Toggle Icon: Eclipse >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Inside the brush ring, an ink disc is the sun; in dark mode a shadow
+ * slides across it and leaves a crescent moon. */
+.theme-toggle-shadow {
+  transform: translate(13px, -3px);
+  transition: transform 0.9s var(--ease-ink);
+}
+html.dark .theme-toggle-shadow {
+  transform: translate(3.4px, -2.6px);
+}
+.theme-toggle-disc {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.9);
+  transition: transform 0.9s var(--ease-ink);
+}
+html.dark .theme-toggle-disc {
+  transform: scale(1);
+}
+html.reduce-motion :is(.theme-toggle-shadow, .theme-toggle-disc) {
+  transition: none;
 }
 
 /* Disable animations for special elements during theme switching */
