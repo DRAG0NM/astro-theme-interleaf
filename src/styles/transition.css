@@ -139,10 +139,10 @@ html[data-theme-changing] [data-disable-theme-toggle-transition] {
 }
 
 /* Language Switch >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Switching language rewrites the page the way a brush writes a line: the
- * new text is laid down from left to right behind a soft, wet edge while
- * the old text quietly sinks back into the paper. Only opacity and a mask
- * move (no blur), so it stays smooth on phones.
+/* Switching language rewrites the page in two clean beats, never both at
+ * once: the old text lifts off the paper first, then, on the blank sheet,
+ * the new text is written in from left to right behind a soft brush edge.
+ * Only opacity and a mask move (no blur), so it stays smooth on phones.
  * Button.astro puts data-lang-arrived on the incoming page and leaves it
  * there, so nothing changes style mid-transition. */
 @keyframes lang-write {
@@ -165,7 +165,7 @@ html[data-lang-arrived]:not([data-theme-changing])::view-transition-group(*) {
 }
 html[data-lang-arrived]:not([data-theme-changing])::view-transition-old(*) {
   z-index: 0;
-  animation: lang-sink 0.3s ease-in 0.6s both !important;
+  animation: lang-sink 0.28s cubic-bezier(0.4, 0, 1, 1) both !important;
 }
 html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
   z-index: 1;
@@ -175,7 +175,7 @@ html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
   mask-size: 250% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  animation: lang-write 0.9s cubic-bezier(0.45, 0.05, 0.25, 1) both !important;
+  animation: lang-write 0.8s cubic-bezier(0.45, 0.05, 0.25, 1) 0.3s both !important;
 }
 
 /* Arriving by language switch, the page is already being "written";
