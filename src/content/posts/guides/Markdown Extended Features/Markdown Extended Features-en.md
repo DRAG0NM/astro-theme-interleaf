@@ -8,7 +8,7 @@ lang: en
 abbrlink: markdown-extended-features
 ---
 
-Here are some extended Markdown features supported by Pianpker, including syntax examples and their stylistic effects.
+Here are some extended Markdown features supported by Interleaf, including syntax examples and their stylistic effects.
 
 ## Figure Captions
 
@@ -157,12 +157,12 @@ To embed GitHub repositories, use the leaf directive `::github{repo="owner/repo"
 ### Syntax
 
 ```
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 ```
 
 ### Output
 
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 
 ## Videos
 

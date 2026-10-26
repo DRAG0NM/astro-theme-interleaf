@@ -8,9 +8,9 @@ lang: zh
 abbrlink: theme-color-schemes
 ---
 
-Pianpker 使用 [OKLCH](https://oklch.com/) 颜色空间建立克制的和纸、墨色与朱红体系。明亮模式以暖纸承载分层墨色；暗夜模式转为深墨底，并降低朱红饱和度，以保证长文阅读的舒适度。
+Interleaf 使用 [OKLCH](https://oklch.com/) 颜色空间建立克制的和纸、墨色与朱红体系。明亮模式以暖纸承载分层墨色；暗夜模式转为深墨底，并降低朱红饱和度，以保证长文阅读的舒适度。
 
-为满足个性化需求，我为主题制作了一些配色方案。你可以在 [src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts) 中替换默认配色，并重启开发服务器以预览新配色。
+为满足个性化需求，我为主题制作了一些配色方案。你可以在 [src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts) 中替换默认配色，并重启开发服务器以预览新配色。
 
 ## 葱白
 

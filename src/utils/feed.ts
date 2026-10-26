@@ -122,7 +122,7 @@ export async function generateFeed({ lang }: { lang?: Language } = {}) {
     language: lang ?? themeConfig.global.locale,
     copyright: `Copyright © ${new Date().getFullYear()} ${author}`,
     updated: new Date(),
-    generator: 'Pianpker with Feed for Node.js',
+    generator: 'Interleaf with Feed for Node.js',
 
     feedLinks: {
       rss: new URL(lang ? `${base}/${lang}/rss.xml` : `${base}/rss.xml`, url).toString(),

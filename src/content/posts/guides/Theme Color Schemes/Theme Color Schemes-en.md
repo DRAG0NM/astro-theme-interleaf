@@ -8,9 +8,9 @@ lang: en
 abbrlink: theme-color-schemes
 ---
 
-Pianpker uses the [OKLCH](https://oklch.com/) color space to build a restrained palette of warm paper, layered ink, and vermilion accents. Dark mode shifts the paper ground to deep ink and lowers the saturation of vermilion for comfortable reading.
+Interleaf uses the [OKLCH](https://oklch.com/) color space to build a restrained palette of warm paper, layered ink, and vermilion accents. Dark mode shifts the paper ground to deep ink and lowers the saturation of vermilion for comfortable reading.
 
-To meet personalization needs, I've created several color schemes for the theme. You can replace the default color scheme in [src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts) and restart the development server to preview the new color scheme.
+To meet personalization needs, I've created several color schemes for the theme. You can replace the default color scheme in [src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts) and restart the development server to preview the new color scheme.
 
 ## Scallion White
 

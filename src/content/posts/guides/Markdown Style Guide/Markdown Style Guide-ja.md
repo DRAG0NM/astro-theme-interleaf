@@ -10,7 +10,7 @@ lang: ja
 abbrlink: markdown-style-guide
 ---
 
-以下は基本的な Markdown 構文の例と、Pianpker テーマでのスタイル効果です。
+以下は基本的な Markdown 構文の例と、Interleaf テーマでのスタイル効果です。
 
 ## 見出し
 

@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/banner-dark.svg">
-    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
+    <img alt="Interleaf · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
   </picture>
 </p>
 
@@ -21,10 +21,10 @@
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="../images/v1.1/home-mobile-dark.webp">
   <source media="(max-width: 640px)" srcset="../images/v1.1/home-mobile-light.webp">
   <source media="(prefers-color-scheme: dark)" srcset="../images/v1.1/home-desktop-dark.webp">
-  <img alt="Pianpker プレビュー" src="../images/v1.1/home-desktop-light.webp">
+  <img alt="Interleaf プレビュー" src="../images/v1.1/home-desktop-light.webp">
 </picture>
 
-Pianpker は [Drag0nM](https://github.com/DRAG0NM) の個人ブログプロジェクトです。文章を中心に、意図的な余白、和紙を思わせる暖色、墨の濃淡、控えめな朱色によって、静かで明快な読書体験を目指します。
+Interleaf は [Drag0nM](https://github.com/DRAG0NM) の個人ブログプロジェクトです。文章を中心に、意図的な余白、和紙を思わせる暖色、墨の濃淡、控えめな朱色によって、静かで明快な読書体験を目指します。
 
 表面的な「和風」の装飾ではなく、侘寂、幽玄、物哀、「間」を組版とリズムの原則として扱います。内容は複雑であっても、表現形式は簡素であり、すべての要素に存在する理由が必要です。
 
@@ -67,6 +67,6 @@ Astro 6 と UnoCSS を基盤とし、多言語コンテンツ、明暗テーマ�
   <sub>朱の細い線が読書の進み具合を示す</sub>
 </p>
 
-Pianpker は radishzz による [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) を基に大幅なカスタマイズを行った派生プロジェクトです。元の著作権表示と MIT License は [`LICENSE`](../../LICENSE) に保持されています。詳細は [`NOTICE.md`](../../NOTICE.md) を参照してください。
+Interleaf は radishzz による [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) を基に大幅なカスタマイズを行った派生プロジェクトです。元の著作権表示と MIT License は [`LICENSE`](../../LICENSE) に保持されています。詳細は [`NOTICE.md`](../../NOTICE.md) を参照してください。
 
 開発・ビルド・デプロイ方法はルートの [README](../../README.md) にあります。

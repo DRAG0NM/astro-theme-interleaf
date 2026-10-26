@@ -8,9 +8,9 @@ lang: fr
 abbrlink: theme-color-schemes
 ---
 
-Pianpker utilise l’espace colorimétrique [OKLCH](https://oklch.com/) pour composer une palette sobre de papier chaud, de nuances d’encre et d’accents vermillon. En mode sombre, le papier devient une encre profonde et le vermillon perd en saturation pour préserver le confort de lecture.
+Interleaf utilise l’espace colorimétrique [OKLCH](https://oklch.com/) pour composer une palette sobre de papier chaud, de nuances d’encre et d’accents vermillon. En mode sombre, le papier devient une encre profonde et le vermillon perd en saturation pour préserver le confort de lecture.
 
-Pour répondre aux besoins de personnalisation, j’ai créé plusieurs schémas de couleurs pour le thème. Vous pouvez remplacer le schéma par défaut dans [src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts), puis redémarrer le serveur de développement pour prévisualiser le nouveau schéma.
+Pour répondre aux besoins de personnalisation, j’ai créé plusieurs schémas de couleurs pour le thème. Vous pouvez remplacer le schéma par défaut dans [src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts), puis redémarrer le serveur de développement pour prévisualiser le nouveau schéma.
 
 ## Blanc ciboulette
 

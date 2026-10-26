@@ -10,7 +10,7 @@ lang: en
 abbrlink: markdown-style-guide
 ---
 
-Here are some basic Markdown syntax examples and their stylistic effects in Pianpker.
+Here are some basic Markdown syntax examples and their stylistic effects in Interleaf.
 
 ## Headings
 

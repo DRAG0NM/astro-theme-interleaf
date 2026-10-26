@@ -8,9 +8,9 @@ lang: ja
 abbrlink: theme-color-schemes
 ---
 
-Pianpker は [OKLCH](https://oklch.com/) カラースペースを用い、温かな紙色、墨の濃淡、控えめな朱色で配色を構成します。暗色モードでは紙面を深い墨色へ移し、朱色の彩度を抑えることで長文の読みやすさを保ちます。
+Interleaf は [OKLCH](https://oklch.com/) カラースペースを用い、温かな紙色、墨の濃淡、控えめな朱色で配色を構成します。暗色モードでは紙面を深い墨色へ移し、朱色の彩度を抑えることで長文の読みやすさを保ちます。
 
-個性的なニーズに応えるため、テーマ用にいくつかの配色スキームを作成しました。[src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts) でデフォルトの配色を置き換え、開発サーバーを再起動して新しい配色をプレビューできます。
+個性的なニーズに応えるため、テーマ用にいくつかの配色スキームを作成しました。[src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts) でデフォルトの配色を置き換え、開発サーバーを再起動して新しい配色をプレビューできます。
 
 ## 葱白色
 

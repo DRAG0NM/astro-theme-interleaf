@@ -10,22 +10,22 @@ lang: zh-tw
 abbrlink: theme-guide
 ---
 
-Pianpker（落紙之間）是一個基於 [Astro](https://astro.build/) 構建的個人部落格專案。本文記錄它的配置與發佈方式，使專案在完成個人化後仍然清晰、可維護、可複用。
+Interleaf（落紙之間）是一個基於 [Astro](https://astro.build/) 構建的個人部落格專案。本文記錄它的配置與發佈方式，使專案在完成個人化後仍然清晰、可維護、可複用。
 
 ## 主題配置
 
-通過修改配置文件 [src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts) 來自定義你的部落格。
+通過修改配置文件 [src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts) 來自定義你的部落格。
 
 ### 站點信息
 
 ```ts
 site: {
   // 站點標題
-  title: 'Pianpker'
+  title: 'Interleaf'
   // 站點副標題
   subtitle: 'Less, between the lines'
   // 站點描述
-  description: 'Pianpker — Less, between the lines.'
+  description: 'Interleaf — Less, between the lines.'
   // 使用 src/i18n/ui.ts 中的多語言標題/副標題/站點描述，代替上方靜態配置
   i18nTitle: true // true | false
   // 作者名稱
@@ -189,7 +189,7 @@ footer: {
     },
     {
       name: 'GitHub',
-      url: 'https://github.com/DRAG0NM/astro-theme-pianpker',
+      url: 'https://github.com/DRAG0NM/astro-theme-interleaf',
     },
     {
       name: 'Email',

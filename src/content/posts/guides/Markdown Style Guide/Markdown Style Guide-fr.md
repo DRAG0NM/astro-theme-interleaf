@@ -10,7 +10,7 @@ lang: fr
 abbrlink: markdown-style-guide
 ---
 
-Voici quelques exemples de syntaxe Markdown de base et leur rendu visuel dans le thème Pianpker.
+Voici quelques exemples de syntaxe Markdown de base et leur rendu visuel dans le thème Interleaf.
 
 ## Titres
 

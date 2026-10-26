@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/banner-dark.svg">
-    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
+    <img alt="Interleaf · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
   </picture>
 </p>
 
@@ -21,10 +21,10 @@
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="../images/v1.1/home-mobile-dark.webp">
   <source media="(max-width: 640px)" srcset="../images/v1.1/home-mobile-light.webp">
   <source media="(prefers-color-scheme: dark)" srcset="../images/v1.1/home-desktop-dark.webp">
-  <img alt="Превью Pianpker" src="../images/v1.1/home-desktop-light.webp">
+  <img alt="Превью Interleaf" src="../images/v1.1/home-desktop-light.webp">
 </picture>
 
-Pianpker — персональный блог-проект [Drag0nM](https://github.com/DRAG0NM), ориентированный на спокойное чтение, осмысленное свободное пространство, тёплые оттенки бумаги, градации туши и редкие киноварные акценты.
+Interleaf — персональный блог-проект [Drag0nM](https://github.com/DRAG0NM), ориентированный на спокойное чтение, осмысленное свободное пространство, тёплые оттенки бумаги, градации туши и редкие киноварные акценты.
 
 Дизайн не копирует японскую эстетику при помощи декора. Ваби-саби, югэн, моно-но аварэ и *ма* используются как принципы типографики и ритма. Содержание может быть сложным, но форма должна оставаться простой, а каждый элемент — оправданным.
 
@@ -67,6 +67,6 @@ Pianpker — персональный блог-проект [Drag0nM](https://gi
   <sub>Тонкая киноварная линия показывает прогресс чтения</sub>
 </p>
 
-Pianpker является глубоко переработанным производным проектом на основе [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) от radishzz. Оригинальное уведомление об авторских правах и лицензия MIT сохранены в [`LICENSE`](../../LICENSE); дополнительные сведения находятся в [`NOTICE.md`](../../NOTICE.md).
+Interleaf является глубоко переработанным производным проектом на основе [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) от radishzz. Оригинальное уведомление об авторских правах и лицензия MIT сохранены в [`LICENSE`](../../LICENSE); дополнительные сведения находятся в [`NOTICE.md`](../../NOTICE.md).
 
 Инструкции по разработке и развёртыванию приведены в основном [README](../../README.md).

@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.svg">
-    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="assets/brand/banner-light.svg" width="760">
+    <img alt="Interleaf · 落纸之间 · Less, between the lines" src="assets/brand/banner-light.svg" width="760">
   </picture>
 </p>
 
@@ -25,12 +25,12 @@
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/images/v1.1/home-mobile-dark.webp">
   <source media="(max-width: 640px)" srcset="assets/images/v1.1/home-mobile-light.webp">
   <source media="(prefers-color-scheme: dark)" srcset="assets/images/v1.1/home-desktop-dark.webp">
-  <img alt="Pianpker preview" src="assets/images/v1.1/home-desktop-light.webp">
+  <img alt="Interleaf preview" src="assets/images/v1.1/home-desktop-light.webp">
 </picture>
 
-Pianpker is an independently maintained, multilingual static blog theme built with [Astro](https://astro.build/) and [UnoCSS](https://unocss.dev/). It is a deeply customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset), shaped around quiet reading, deliberate whitespace, warm paper tones, layered ink colors, and restrained vermilion accents.
+Interleaf is an independently maintained, multilingual static blog theme built with [Astro](https://astro.build/) and [UnoCSS](https://unocss.dev/). It is a deeply customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset), shaped around quiet reading, deliberate whitespace, warm paper tones, layered ink colors, and restrained vermilion accents.
 
-Pianpker（落纸之间）是一个以阅读为中心的多语言静态博客主题。它用克制的留白、和纸暖色、墨色层级与少量朱红，建立安静、清晰且可长期阅读的数字排版体验。
+Interleaf（落纸之间）是一个以阅读为中心的多语言静态博客主题。它用克制的留白、和纸暖色、墨色层级与少量朱红，建立安静、清晰且可长期阅读的数字排版体验。
 
 ## Features
 
@@ -61,7 +61,7 @@ Pianpker（落纸之间）是一个以阅读为中心的多语言静态博客主
 
 ## Design
 
-Pianpker treats wabi-sabi, yūgen, mono no aware, and *ma* as editorial principles rather than decorative motifs:
+Interleaf treats wabi-sabi, yūgen, mono no aware, and *ma* as editorial principles rather than decorative motifs:
 
 - content may be complex; its presentation should remain simple;
 - whitespace is an intentional pause, not an empty area to fill;
@@ -106,11 +106,11 @@ Motion follows the same restraint as the layout: one easing curve, short distanc
 
 ## Getting Started
 
-Use [this repository as a template](https://github.com/DRAG0NM/astro-theme-pianpker/generate), or clone it directly:
+Use [this repository as a template](https://github.com/DRAG0NM/astro-theme-interleaf/generate), or clone it directly:
 
 ```bash
-git clone https://github.com/DRAG0NM/astro-theme-pianpker.git
-cd astro-theme-pianpker
+git clone https://github.com/DRAG0NM/astro-theme-interleaf.git
+cd astro-theme-interleaf
 
 corepack enable
 pnpm install --frozen-lockfile
@@ -171,7 +171,7 @@ pnpm preview
 
 ## Deployment
 
-Pianpker is prepared for static deployment on [Cloudflare Pages](https://pages.cloudflare.com/):
+Interleaf is prepared for static deployment on [Cloudflare Pages](https://pages.cloudflare.com/):
 
 | Setting | Value |
 | --- | --- |
@@ -184,9 +184,9 @@ The same static output can also be deployed to other platforms supported by the 
 
 ## Acknowledgements
 
-Pianpker is an independently customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) by [radishzz](https://github.com/radishzzz). Retypeset provided the original Astro architecture, content model, routing, typography foundation, and component system.
+Interleaf is an independently customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) by [radishzz](https://github.com/radishzzz). Retypeset provided the original Astro architecture, content model, routing, typography foundation, and component system.
 
-The original copyright and permission notice are retained in [`LICENSE`](LICENSE). A concise record of the derivative work and Pianpker-specific changes is available in [`NOTICE.md`](NOTICE.md).
+The original copyright and permission notice are retained in [`LICENSE`](LICENSE). A concise record of the derivative work and Interleaf-specific changes is available in [`NOTICE.md`](NOTICE.md).
 
 Upstream inspiration and components include:
 
@@ -205,4 +205,4 @@ This repository retains the original [MIT License](LICENSE):
 Copyright (c) 2025 radishzz
 ```
 
-Pianpker-specific modifications are maintained by [Drag0nM](https://github.com/DRAG0NM). The original MIT copyright and permission notice must remain with copies or substantial portions of the software.
+Interleaf-specific modifications are maintained by [Drag0nM](https://github.com/DRAG0NM). The original MIT copyright and permission notice must remain with copies or substantial portions of the software.

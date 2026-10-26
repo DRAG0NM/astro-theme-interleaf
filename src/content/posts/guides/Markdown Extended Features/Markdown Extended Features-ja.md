@@ -8,7 +8,7 @@ lang: ja
 abbrlink: markdown-extended-features
 ---
 
-この記事では、Pianpker テーマがサポートする Markdown 拡張機能について、構文例とその効果を紹介します。
+この記事では、Interleaf テーマがサポートする Markdown 拡張機能について、構文例とその効果を紹介します。
 
 ## 図のキャプション
 
@@ -157,12 +157,12 @@ graph TD;
 ### 構文
 
 ```
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 ```
 
 ### 効果
 
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 
 ## 動画
 

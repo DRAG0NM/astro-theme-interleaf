@@ -4,11 +4,11 @@ export const themeConfig: ThemeConfig = {
   // SITE INFORMATION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START
   site: {
     // site title
-    title: 'Pianpker',
+    title: 'Interleaf',
     // site subtitle
     subtitle: 'Less, between the lines',
     // site description
-    description: 'Pianpker — Less, between the lines.',
+    description: 'Interleaf — Less, between the lines.',
     // use i18n title/subtitle/description from src/i18n/ui.ts instead of static ones above
     i18nTitle: true, // true | false
     // author name
@@ -172,7 +172,7 @@ export const themeConfig: ThemeConfig = {
       },
       {
         name: 'GitHub',
-        url: 'https://github.com/DRAG0NM/astro-theme-pianpker',
+        url: 'https://github.com/DRAG0NM/astro-theme-interleaf',
       },
       {
         name: 'Email',

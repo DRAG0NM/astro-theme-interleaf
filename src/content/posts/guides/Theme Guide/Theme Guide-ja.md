@@ -10,22 +10,22 @@ lang: ja
 abbrlink: theme-guide
 ---
 
-Pianpker は [Astro](https://astro.build/) で構築された個人ブログプロジェクトです。本ガイドでは、プロジェクトを理解し再利用できるよう、設定と公開手順を説明します。
+Interleaf は [Astro](https://astro.build/) で構築された個人ブログプロジェクトです。本ガイドでは、プロジェクトを理解し再利用できるよう、設定と公開手順を説明します。
 
 ## テーマ設定
 
-設定ファイル [src/config.ts](https://github.com/DRAG0NM/astro-theme-pianpker/blob/main/src/config.ts) を変更してあなたのブログをカスタマイズできます。
+設定ファイル [src/config.ts](https://github.com/DRAG0NM/astro-theme-interleaf/blob/main/src/config.ts) を変更してあなたのブログをカスタマイズできます。
 
 ### サイト情報
 
 ```ts
 site: {
   // サイトタイトル
-  title: 'Pianpker'
+  title: 'Interleaf'
   // サイトサブタイトル
   subtitle: 'Less, between the lines'
   // サイト説明
-  description: 'Pianpker — Less, between the lines.'
+  description: 'Interleaf — Less, between the lines.'
   // 上記の静的設定の代わりに src/i18n/ui.ts の多言語タイトル/サブタイトル/説明を使用
   i18nTitle: true // true | false
   // 著者名
@@ -189,7 +189,7 @@ footer: {
     },
     {
       name: 'GitHub',
-      url: 'https://github.com/DRAG0NM/astro-theme-pianpker',
+      url: 'https://github.com/DRAG0NM/astro-theme-interleaf',
     },
     {
       name: 'Email',

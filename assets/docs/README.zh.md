@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/banner-dark.svg">
-    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
+    <img alt="Interleaf · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
   </picture>
 </p>
 
@@ -25,10 +25,10 @@
   <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="../images/v1.1/home-mobile-dark.webp">
   <source media="(max-width: 640px)" srcset="../images/v1.1/home-mobile-light.webp">
   <source media="(prefers-color-scheme: dark)" srcset="../images/v1.1/home-desktop-dark.webp">
-  <img alt="Pianpker 预览" src="../images/v1.1/home-desktop-light.webp">
+  <img alt="Interleaf 预览" src="../images/v1.1/home-desktop-light.webp">
 </picture>
 
-Pianpker 是 [Drag0nM](https://github.com/DRAG0NM) 的个人博客项目。它以文字阅读为中心，用克制的留白、和纸暖色、墨色层级与少量朱红，建立安静而清晰的数字排版体验。
+Interleaf 是 [Drag0nM](https://github.com/DRAG0NM) 的个人博客项目。它以文字阅读为中心，用克制的留白、和纸暖色、墨色层级与少量朱红，建立安静而清晰的数字排版体验。
 
 ## 设计原则
 
@@ -80,6 +80,6 @@ Pianpker 是 [Drag0nM](https://github.com/DRAG0NM) 的个人博客项目。它�
 
 ## 来源与授权
 
-Pianpker 基于 radishzz 的 [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) 深度定制。原始版权与 MIT 许可文本完整保留在仓库根目录的 [`LICENSE`](../../LICENSE) 中，具体说明见 [`NOTICE.md`](../../NOTICE.md)。
+Interleaf 基于 radishzz 的 [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) 深度定制。原始版权与 MIT 许可文本完整保留在仓库根目录的 [`LICENSE`](../../LICENSE) 中，具体说明见 [`NOTICE.md`](../../NOTICE.md)。
 
 完整的开发、构建和部署说明请阅读仓库根目录的 [README](../../README.md)。

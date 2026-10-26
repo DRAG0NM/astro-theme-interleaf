@@ -8,7 +8,7 @@ lang: zh-tw
 abbrlink: markdown-extended-features
 ---
 
-本文介紹 Pianpker 主題支援的 Markdown 擴展功能，包括語法範例與效果呈現。
+本文介紹 Interleaf 主題支援的 Markdown 擴展功能，包括語法範例與效果呈現。
 
 ## 圖注
 
@@ -157,12 +157,12 @@ graph TD;
 ### 語法
 
 ```
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 ```
 
 ### 效果
 
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 
 ## 視頻
 

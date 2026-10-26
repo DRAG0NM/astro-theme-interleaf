@@ -8,7 +8,7 @@ lang: fr
 abbrlink: markdown-extended-features
 ---
 
-Voici quelques fonctionnalités étendues de Markdown prises en charge par Pianpker, avec des exemples de syntaxe et leur rendu visuel.
+Voici quelques fonctionnalités étendues de Markdown prises en charge par Interleaf, avec des exemples de syntaxe et leur rendu visuel.
 
 ## Légendes des figures
 
@@ -157,12 +157,12 @@ Pour intégrer un dépôt GitHub, utilisez la directive feuille `::github{repo="
 ### Syntaxe
 
 ```
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 ```
 
 ### Résultat
 
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 
 ## Vidéos
 

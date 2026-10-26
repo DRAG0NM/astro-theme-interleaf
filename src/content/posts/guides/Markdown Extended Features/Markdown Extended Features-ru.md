@@ -8,7 +8,7 @@ lang: ru
 abbrlink: markdown-extended-features
 ---
 
-Здесь представлены некоторые расширенные функции Markdown, поддерживаемые темой Pianpker, включая примеры синтаксиса и их стилистические эффекты.
+Здесь представлены некоторые расширенные функции Markdown, поддерживаемые темой Interleaf, включая примеры синтаксиса и их стилистические эффекты.
 
 ## Подписи к изображениям
 
@@ -157,12 +157,12 @@ graph TD;
 ### Синтаксис
 
 ```
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 ```
 
 ### Результат
 
-::github{repo="DRAG0NM/astro-theme-pianpker"}
+::github{repo="DRAG0NM/astro-theme-interleaf"}
 
 ## Видео
 
