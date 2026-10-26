@@ -1,7 +1,7 @@
 ---
 import type { Language } from '@/i18n/config'
 import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
-import SearchIcon from '@/assets/icons/search-icon.svg'
+// import SearchIcon from '@/assets/icons/search-icon.svg' // search disabled for now
 import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { moreLocales, themeConfig } from '@/config'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
@@ -36,7 +36,7 @@ const nextUrl = supportedLangs.length > 0
   'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
 ]}
 >
-  <!-- Search -->
+  {/* Search is disabled for now; uncomment to enable (also in Layout.astro and astro.config.ts).
   <button
     id="search-button"
     type="button"
@@ -50,6 +50,7 @@ const nextUrl = supportedLangs.length > 0
       fill="currentColor"
     />
   </button>
+  */}
 
   <!-- Language Switcher -->
   {showLanguageSwitcher && (
@@ -197,24 +198,21 @@ function handleSystemChange(event: MediaQueryListEvent) {
 
 document.addEventListener('click', handleThemeToggle)
 
-// Language switch: mark the navigation so transition.css can play the
-// dissolve / re-ink animation, and carry the mark onto the incoming page.
+// Language switch: mark the navigation, and stamp the incoming page with
+// data-lang-arrived so transition.css can play the writing animation. The
+// stamp is never removed on that page (the next navigation replaces the root
+// attributes anyway), so no style flips mid-transition.
+let languageSwitchPending = false
 document.addEventListener('click', (e) => {
-  const root = document.documentElement
-  if (e.target instanceof Element && e.target.closest('#language-switcher')
-    && !root.classList.contains('reduce-motion')) {
-    root.setAttribute('data-lang-switching', '')
-    window.setTimeout(() => root.removeAttribute('data-lang-switching'), 2000)
-  }
+  languageSwitchPending = e.target instanceof Element
+    && e.target.closest('#language-switcher') !== null
+    && !document.documentElement.classList.contains('reduce-motion')
 })
 document.addEventListener('astro:before-swap', (e) => {
-  if (!document.documentElement.hasAttribute('data-lang-switching')) {
-    return
+  if (languageSwitchPending) {
+    e.newDocument.documentElement.setAttribute('data-lang-arrived', '')
   }
-  e.newDocument.documentElement.setAttribute('data-lang-switching', '')
-  const clear = () => document.documentElement.removeAttribute('data-lang-switching')
-  e.viewTransition.finished.then(clear, clear)
-  window.setTimeout(clear, 2000)
+  languageSwitchPending = false
 })
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemChange)
 </script>

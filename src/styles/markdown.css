@@ -290,7 +290,8 @@ html.dark .heti :where(u) {
   color: oklch(var(--un-preset-theme-colors-accent) / 1);
 }
 .heti :is(.sidenote, .footnote-card) {
-  --at-apply: 'absolute flex gap-2 text-3.25 leading-1.65 cjk:tracking-normal';
+  --at-apply: 'absolute flex gap-2 text-3.25 cjk:tracking-normal';
+  line-height: 1.7;
   color: var(--ink-light);
 }
 .heti .sidenote {

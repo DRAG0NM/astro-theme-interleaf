@@ -2,6 +2,8 @@
 #search-dialog {
   --at-apply: 'm-0 h-full max-h-none w-full max-w-none border-none bg-background p-0 c-secondary';
   height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 #search-dialog::backdrop {
   background: transparent;
@@ -16,7 +18,7 @@
 }
 
 .search-sheet {
-  --at-apply: 'mx-auto max-w-40rem px-[min(7.25vw,3.731rem)] pt-[16vh] lg:px-0';
+  --at-apply: 'mx-auto max-w-40rem px-[min(7.25vw,3.731rem)] pb-[12vh] pt-[16vh] lg:px-0';
 }
 .search-field {
   --at-apply: 'relative flex items-baseline border-b border-b-hairline border-b-solid';
@@ -44,8 +46,42 @@
 .search-field:focus-within::after {
   transform: scaleX(1);
 }
-.search-esc {
-  --at-apply: 'absolute right-0 text-3 c-secondary/50 font-navbar';
+.search-close {
+  --at-apply: 'absolute right-0 top-50% grid h-8 min-w-8 place-items-center bg-transparent p-0 c-secondary/50';
+  border: none;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color var(--dur-hover) var(--ease-ink);
+}
+.search-close:hover,
+.search-close:focus-visible {
+  color: oklch(var(--un-preset-theme-colors-primary) / 1);
+}
+.search-close-key {
+  --at-apply: 'text-3 font-navbar';
+}
+/* Touch screens have no Esc key: show a thin brush-stroke cross instead. */
+.search-close-cross {
+  --at-apply: 'relative hidden h-4 w-4';
+}
+.search-close-cross::before,
+.search-close-cross::after {
+  --at-apply: 'absolute left-0 top-50% h-1px w-full bg-current';
+  content: '';
+}
+.search-close-cross::before {
+  transform: rotate(45deg);
+}
+.search-close-cross::after {
+  transform: rotate(-45deg);
+}
+@media (pointer: coarse) {
+  .search-close-key {
+    display: none;
+  }
+  .search-close-cross {
+    display: block;
+  }
 }
 
 .search-status {
@@ -75,7 +111,8 @@ html:not(.reduce-motion) .search-results li {
   color: oklch(var(--un-preset-theme-colors-accent) / 1);
 }
 .search-result-excerpt {
-  --at-apply: 'mt-1.5 text-3.75 leading-1.7 cjk:tracking-wide';
+  --at-apply: 'mt-1.5 text-3.75 cjk:tracking-wide';
+  line-height: 1.75;
   color: var(--ink-light);
 }
 .search-result-excerpt mark {
