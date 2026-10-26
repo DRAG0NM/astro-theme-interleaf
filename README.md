@@ -1,15 +1,30 @@
-# Pianpker · 落纸之间
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/banner-dark.svg">
+    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="assets/brand/banner-light.svg" width="760">
+  </picture>
+</p>
 
-> 字落有间，读来无距。
->
-> Less, between the lines.
+<p align="center">
+  <i>字落有间，读来无距。</i>
+</p>
+
+<p align="center">
+  <a href="https://astro.build/"><img alt="Astro 6" src="https://img.shields.io/badge/Astro-6-2b2a28?style=flat-square&logo=astro&logoColor=f5f3ee"></a>
+  <a href="https://unocss.dev/"><img alt="UnoCSS" src="https://img.shields.io/badge/UnoCSS-66-2b2a28?style=flat-square&logo=unocss&logoColor=f5f3ee"></a>
+  <a href="https://pianpker.pages.dev/en/"><img alt="6 languages" src="https://img.shields.io/badge/i18n-6%20languages-77736b?style=flat-square"></a>
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/license-MIT-77736b?style=flat-square"></a>
+  <a href="https://pianpker.pages.dev"><img alt="Live demo" src="https://img.shields.io/badge/demo-pianpker.pages.dev-a54139?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="README.md">English</a> ｜ <a href="assets/docs/README.zh.md">简体中文</a> ｜ <a href="assets/docs/README.zh-tw.md">繁體中文</a> ｜ <a href="assets/docs/README.ja.md">日本語</a> ｜ <a href="assets/docs/README.fr.md">Français</a> ｜ <a href="assets/docs/README.ru.md">Русский</a>
+</p>
 
 <picture>
   <source media="(max-width: 640px)" srcset="assets/images/v1/pianpker-zh-mobile.webp">
   <img alt="Pianpker preview" src="assets/images/v1/pianpker-zh-desktop.webp">
 </picture>
-
-[English](README.md) ｜ [简体中文](assets/docs/README.zh.md) ｜ [繁體中文](assets/docs/README.zh-tw.md) ｜ [日本語](assets/docs/README.ja.md) ｜ [Français](assets/docs/README.fr.md) ｜ [Русский](assets/docs/README.ru.md)
 
 Pianpker is an independently maintained, multilingual static blog theme built with [Astro](https://astro.build/) and [UnoCSS](https://unocss.dev/). It is a deeply customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset), shaped around quiet reading, deliberate whitespace, warm paper tones, layered ink colors, and restrained vermilion accents.
 
@@ -20,6 +35,9 @@ Pianpker（落纸之间）是一个以阅读为中心的多语言静态博客主
 - Astro 6 and UnoCSS
 - Simplified Chinese, Traditional Chinese, English, French, Japanese, and Russian content
 - Light and dark themes with Astro ClientRouter and view transitions
+- Ink-inspired motion: ink-drop theme switch, block-by-block language rewrite, reading progress
+- Margin sidenotes for footnotes on wide screens, note cards on small ones
+- Remembers each reader's position in a post
 - Refined multilingual typography and local font loading
 - Markdown, MDX, KaTeX, Mermaid, table of contents, and code copy
 - Image captions, galleries, zoom, and external media embeds
@@ -36,6 +54,16 @@ Pianpker treats wabi-sabi, yūgen, mono no aware, and *ma* as editorial principl
 - vermilion is reserved for interaction and seal-like emphasis;
 - cards, shadows, glass effects, and saturated gradients do not define the visual hierarchy;
 - every visible element, animation, and value should have a reason to exist.
+
+## Motion and Reading
+
+Motion follows the same restraint as the layout: one easing curve, short distances, only opacity, masks and transforms, and everything turns off with the system "reduce motion" setting or `reduceMotion: true` in `src/config.ts`.
+
+- **Theme switch**: a drop of ink lands on the toggle and bleeds across the page; switching back, the ink dries into the drop. The icon is a hollow brush ring; in dark mode a crescent swells out of it.
+- **Language switch**: the visible blocks of the page lift off top to bottom, then the new language is written in block by block, left to right.
+- **Entry**: text settles into the page with a short drift and soft focus; images still loading sharpen from a pale, soft state.
+- **Reading aids**: a vermilion hairline shows reading progress; footnotes appear as sidenotes in the margin when there is room, otherwise as cards under the reference; the last reading position of each post is restored on return.
+- **Search (disabled)**: a Pagefind-based search dialog is included but commented out. To enable it, uncomment the marked lines in `src/layouts/Layout.astro`, `src/components/Button.astro` and `astro.config.ts`; the index is built after `astro build`.
 
 ## Getting Started
 

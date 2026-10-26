@@ -63,7 +63,18 @@
 /* Links */
 .heti :where(a:not(.no-heti):not(.no-heti *)) {
   --at-apply: 'font-medium tracking-normal underline underline-0.075em decoration-secondary/80 underline-offset-0.1em cjk:break-all';
-  --at-apply: 'transition-colors ease-out hover:(c-primary decoration-accent/90) lg:underline-0.1em';
+  --at-apply: 'hover:(c-primary decoration-accent/90) lg:underline-0.1em';
+  transition:
+    color var(--dur-hover) var(--ease-ink),
+    text-decoration-color var(--dur-hover) var(--ease-ink),
+    text-underline-offset var(--dur-hover) var(--ease-ink);
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):hover {
+  text-underline-offset: 0.2em;
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):focus-visible {
+  outline: 1px solid oklch(var(--un-preset-theme-colors-accent) / 0.8);
+  outline-offset: 2px;
 }
 
 /* Images */
@@ -265,6 +276,60 @@ html.dark .heti :where(u) {
 }
 .heti .data-footnote-backref {
   --at-apply: 'font-serif no-underline';
+}
+
+/* Sidenotes & Footnote Cards (Sidenotes.astro) */
+#post-content {
+  position: relative;
+}
+.heti a[data-footnote-ref] {
+  transition: color var(--dur-hover) var(--ease-ink), background-color var(--dur-hover) var(--ease-ink);
+}
+.heti a[data-footnote-ref].is-active {
+  --at-apply: 'bg-highlight';
+  color: oklch(var(--un-preset-theme-colors-accent) / 1);
+}
+.heti :is(.sidenote, .footnote-card) {
+  --at-apply: 'absolute flex gap-2 text-3.25 cjk:tracking-normal';
+  line-height: 1.7;
+  color: var(--ink-light);
+}
+.heti .sidenote {
+  left: calc(100% + 2.5rem);
+  transition: color var(--dur-hover) var(--ease-ink);
+}
+.heti .sidenote.is-active {
+  color: var(--ink-very-dark);
+}
+.heti .footnote-card {
+  --at-apply: 'z-50 rounded bg-background px-4 py-3 border border-hairline border-solid';
+  box-shadow: 0 0.5rem 1.5rem -1rem oklch(0.2 0.01 95 / 0.35);
+  animation: ink-in 0.45s var(--ease-ink) both;
+}
+html.reduce-motion .heti .footnote-card {
+  animation: none;
+}
+.heti .sidenote-num {
+  --at-apply: 'shrink-0 font-time';
+  color: oklch(var(--un-preset-theme-colors-accent) / 0.85);
+}
+.heti .sidenote-body > :where(p, ul, ol) {
+  --at-apply: 'm-0';
+}
+.heti .sidenote-body :where(a) {
+  --at-apply: 'font-normal';
+}
+/* When notes live in the margin, the list at the end is redundant on screen. */
+html.sidenotes-on .heti section[data-footnotes] {
+  display: none;
+}
+@media print {
+  .heti :is(.sidenote, .footnote-card) {
+    display: none !important;
+  }
+  html.sidenotes-on .heti section[data-footnotes] {
+    display: block !important;
+  }
 }
 
 /* Horizontal Rules */

@@ -1,9 +1,12 @@
 ---
 import type { Language } from '@/i18n/config'
 import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
+// import SearchIcon from '@/assets/icons/search-icon.svg' // search disabled for now
 import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { moreLocales, themeConfig } from '@/config'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
 
 interface Props {
   supportedLangs: Language[]
@@ -16,6 +19,8 @@ const {
 
 const { supportedLangs } = Astro.props
 const currentPath = Astro.url.pathname
+const { currentLang } = getPageInfo(currentPath)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 
 // Check if there are other languages to switch
 const showLanguageSwitcher = moreLocales.length > 0
@@ -31,6 +36,22 @@ const nextUrl = supportedLangs.length > 0
   'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
 ]}
 >
+  {/* Search is disabled for now; uncomment to enable (also in Layout.astro and astro.config.ts).
+  <button
+    id="search-button"
+    type="button"
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    aria-label={currentUI.search}
+    aria-haspopup="dialog"
+    aria-controls="search-dialog"
+  >
+    <SearchIcon
+      aria-hidden="true"
+      fill="currentColor"
+    />
+  </button>
+  */}
+
   <!-- Language Switcher -->
   {showLanguageSwitcher && (
     <a
@@ -61,102 +82,8 @@ const nextUrl = supportedLangs.length > 0
   </button>
 </div>
 
-<!-- Theme Toggle Script >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<!-- Theme & Language Switch Scripts (src/scripts) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
 <script>
-type StoredTheme = 'dark' | 'light'
-
-function getStoredTheme(): StoredTheme | null {
-  const storedTheme = localStorage.getItem('theme')
-  return storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null
-}
-
-// Apply theme changes
-function applyTheme(isDark: boolean, options: { persist?: boolean } = {}) {
-  document.documentElement.classList.toggle('dark', isDark)
-
-  // Update meta theme-color tag
-  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]')
-  const themeButton = document.getElementById('theme-toggle-button')
-  const lightMode = themeButton?.dataset.lightMode
-  const darkMode = themeButton?.dataset.darkMode
-
-  if (metaThemeColor && lightMode && darkMode) {
-    metaThemeColor.setAttribute('content', isDark ? darkMode : lightMode)
-    document.documentElement.style.backgroundColor = isDark ? darkMode : lightMode
-  }
-
-  if (options.persist === true) {
-    localStorage.setItem('theme', isDark ? 'dark' : 'light')
-  }
-  document.dispatchEvent(new Event('theme-changed'))
-}
-
-// Toggle theme mode
-function toggleThemeFromUser() {
-  const isDark = !document.documentElement.classList.contains('dark')
-  applyTheme(isDark, { persist: true })
-}
-
-let activeThemeTransition: { finished: Promise<unknown> } | null = null
-
-function clearThemeTransition(root: HTMLElement) {
-  root.style.removeProperty('view-transition-name')
-  root.removeAttribute('data-theme-changing')
-  activeThemeTransition = null
-}
-
-// Handle theme toggle click events
-function handleThemeToggle(e: MouseEvent) {
-  if (!(e.target instanceof Element)) {
-    return
-  }
-
-  const themeButton = e.target.closest('#theme-toggle-button')
-  if (!(themeButton instanceof HTMLElement)) {
-    return
-  }
-
-  const root = document.documentElement
-  const supportsTransition = typeof document.startViewTransition === 'function'
-
-  // If motion is reduced, the API is unavailable, or a transition is running,
-  // keep the theme change immediate and deterministic.
-  if (root.classList.contains('reduce-motion') || !supportsTransition) {
-    toggleThemeFromUser()
-    return
-  }
-  if (activeThemeTransition) {
-    return
-  }
-
-  // Add temporary markers before view transition
-  root.style.setProperty('view-transition-name', 'theme-toggle-transition')
-  root.setAttribute('data-theme-changing', '')
-
-  // Use View Transitions API for theme toggle
-  try {
-    const transition = document.startViewTransition(toggleThemeFromUser)
-    activeThemeTransition = transition
-
-    // Remove temporary markers after view transition
-    transition.finished.then(
-      () => clearThemeTransition(root),
-      () => clearThemeTransition(root),
-    )
-  }
-  catch {
-    clearThemeTransition(root)
-    toggleThemeFromUser()
-  }
-}
-
-// Listen to system theme changes in real time
-function handleSystemChange(event: MediaQueryListEvent) {
-  if (getStoredTheme() === null) {
-    applyTheme(event.matches, { persist: false })
-  }
-}
-
-document.addEventListener('click', handleThemeToggle)
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemChange)
+import '@/scripts/theme-toggle'
+import '@/scripts/language-switch'
 </script>

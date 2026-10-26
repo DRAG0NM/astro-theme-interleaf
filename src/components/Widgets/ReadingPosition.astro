@@ -1,0 +1,83 @@
+<!--
+  Remembers how far a reader got in each post and returns them there next
+  time. Stored per page in this browser only (localStorage); skipped when
+  the URL points at a heading, and for short scrolls near the top or end.
+-->
+<script>
+const KEY = 'pianpker:reading-position'
+const MAX_ENTRIES = 50
+const MIN_OFFSET = 400 // px; closer to the top than this is not worth restoring
+const MAX_AGE = 1000 * 60 * 60 * 24 * 90 // 90 days
+
+type Positions = Record<string, { y: number, t: number }>
+
+function load(): Positions {
+  try {
+    return JSON.parse(localStorage.getItem(KEY) ?? '{}') as Positions
+  }
+  catch {
+    return {}
+  }
+}
+
+function save(positions: Positions) {
+  try {
+    const entries = Object.entries(positions)
+      .sort((a, b) => b[1].t - a[1].t)
+      .slice(0, MAX_ENTRIES)
+    localStorage.setItem(KEY, JSON.stringify(Object.fromEntries(entries)))
+  }
+  catch {}
+}
+
+let stop: (() => void) | null = null
+
+function setup() {
+  stop?.()
+  stop = null
+
+  if (!document.getElementById('post-content')) {
+    return
+  }
+  const path = location.pathname
+
+  // Restore, unless the reader came for a specific heading.
+  if (!location.hash) {
+    const entry = load()[path]
+    const end = document.documentElement.scrollHeight - window.innerHeight
+    if (entry && Date.now() - entry.t < MAX_AGE
+      && entry.y > MIN_OFFSET && entry.y < end - 200) {
+      window.scrollTo({ top: entry.y, behavior: 'instant' })
+    }
+  }
+
+  let timer = 0
+  const record = () => {
+    window.clearTimeout(timer)
+    timer = window.setTimeout(() => {
+      const positions = load()
+      const end = document.documentElement.scrollHeight - window.innerHeight
+      // Finished or barely started: forget it.
+      if (window.scrollY < MIN_OFFSET || window.scrollY > end - 200) {
+        delete positions[path]
+      }
+      else {
+        positions[path] = { y: Math.round(window.scrollY), t: Date.now() }
+      }
+      save(positions)
+    }, 300)
+  }
+
+  window.addEventListener('scroll', record, { passive: true })
+  stop = () => {
+    window.clearTimeout(timer)
+    window.removeEventListener('scroll', record)
+  }
+}
+
+document.addEventListener('astro:page-load', setup)
+document.addEventListener('astro:before-swap', () => {
+  stop?.()
+  stop = null
+})
+</script>

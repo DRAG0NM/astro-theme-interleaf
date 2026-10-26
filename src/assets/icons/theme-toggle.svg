@@ -1,3 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <mask id="theme-toggle-eclipse">
+      <rect width="24" height="24" fill="#fff"/>
+      <circle class="theme-toggle-shadow" cx="12" cy="12" r="6.1" fill="#000"/>
+    </mask>
+  </defs>
   <path d="M12.06.61C5.66.61.46 5.71.46 12.11s5.1 11.5 11.6 11.5 11.5-5.1 11.5-11.5S18.46.61 12.06.61m0 21c-6.07 0-10.94-4.2-10.94-9.5s4.87-9.4 10.94-9.4S23 6.91 23 12.21s-4.88 9.4-10.94 9.4"/>
+  <circle class="theme-toggle-disc" cx="12" cy="12.1" r="5.6" mask="url(#theme-toggle-eclipse)"/>
 </svg>

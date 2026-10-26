@@ -86,7 +86,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
   postSlug={post.id}
   supportedLangs={supportedLangs}
 >
-  <article class="heti">
+  <article class="heti" data-pagefind-body>
     <div class="relative">
       <!-- Go Back Button On Desktop -->
       <BackButton />
@@ -115,12 +115,12 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
       />
     </div>
     <!-- TOC -->
-    {post.data.toc && <TOC headings={headings} />}
+    {post.data.toc && <div data-pagefind-ignore="all"><TOC headings={headings} /></div>}
     <!-- Content -->
     <div id="post-content">
       <Content />
       <!-- Copyright -->
-      <div id="post-copyright" />
+      <div id="post-copyright" data-pagefind-ignore="all" />
       <!-- Tag List -->
       {post.data.tags?.length > 0 && (
         <div class="mt-12.6 uno-decorative-line" />
@@ -130,7 +130,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
         />
       )}
       <!-- Comment -->
-      <Comment />
+      <div data-pagefind-ignore="all"><Comment /></div>
     </div>
   </article>
 </Layout>

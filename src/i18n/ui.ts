@@ -8,6 +8,12 @@ interface Translation {
   tags: string
   about: string
   toc: string
+  search: string
+  searchPlaceholder: string
+  searchEmpty: string
+  notFoundTitle: string
+  notFoundText: string
+  backHome: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -19,6 +25,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Schlagwörter',
     about: 'Über',
     toc: 'Inhaltsverzeichnis',
+    search: 'Suchen',
+    searchPlaceholder: 'Beiträge durchsuchen…',
+    searchEmpty: 'Nichts gefunden',
+    notFoundTitle: 'Hier steht nichts',
+    notFoundText: 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
+    backHome: 'Zur Startseite',
   },
   'en': {
     title: 'Pianpker',
@@ -28,6 +40,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'About',
     toc: 'Table of Contents',
+    search: 'Search',
+    searchPlaceholder: 'Search posts…',
+    searchEmpty: 'No results',
+    notFoundTitle: 'Nothing written here',
+    notFoundText: 'The page you are looking for does not exist or has been moved.',
+    backHome: 'Back to home',
   },
   'es': {
     title: 'Pianpker',
@@ -37,6 +55,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Etiquetas',
     about: 'Sobre',
     toc: 'Índice',
+    search: 'Buscar',
+    searchPlaceholder: 'Buscar artículos…',
+    searchEmpty: 'Sin resultados',
+    notFoundTitle: 'Aquí no hay nada escrito',
+    notFoundText: 'La página que buscas no existe o se ha movido.',
+    backHome: 'Volver al inicio',
   },
   'fr': {
     title: 'Pianpker',
@@ -46,6 +70,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Étiquettes',
     about: 'À propos',
     toc: 'Table des matières',
+    search: 'Rechercher',
+    searchPlaceholder: 'Rechercher des articles…',
+    searchEmpty: 'Aucun résultat',
+    notFoundTitle: 'Rien n’est écrit ici',
+    notFoundText: 'La page que vous cherchez n’existe pas ou a été déplacée.',
+    backHome: 'Retour à l’accueil',
   },
   'ja': {
     title: 'Pianpker',
@@ -55,6 +85,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'タグ',
     about: '概要',
     toc: '目次',
+    search: '検索',
+    searchPlaceholder: '記事を検索…',
+    searchEmpty: '見つかりませんでした',
+    notFoundTitle: 'このページは白紙です',
+    notFoundText: 'お探しのページは存在しないか、移動した可能性があります。',
+    backHome: 'ホームへ戻る',
   },
   'ko': {
     title: 'Pianpker',
@@ -64,6 +100,12 @@ export const ui: Record<Language, Translation> = {
     tags: '태그',
     about: '소개',
     toc: '목차',
+    search: '검색',
+    searchPlaceholder: '글 검색…',
+    searchEmpty: '결과 없음',
+    notFoundTitle: '여기엔 아무것도 없습니다',
+    notFoundText: '찾으시는 페이지가 없거나 이동되었습니다.',
+    backHome: '홈으로',
   },
   'pl': {
     title: 'Pianpker',
@@ -73,6 +115,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tagi',
     about: 'O stronie',
     toc: 'Spis treści',
+    search: 'Szukaj',
+    searchPlaceholder: 'Szukaj wpisów…',
+    searchEmpty: 'Brak wyników',
+    notFoundTitle: 'Nic tu nie napisano',
+    notFoundText: 'Szukana strona nie istnieje lub została przeniesiona.',
+    backHome: 'Wróć na stronę główną',
   },
   'pt': {
     title: 'Pianpker',
@@ -82,6 +130,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'Sobre',
     toc: 'Sumário',
+    search: 'Pesquisar',
+    searchPlaceholder: 'Pesquisar artigos…',
+    searchEmpty: 'Nenhum resultado',
+    notFoundTitle: 'Nada escrito aqui',
+    notFoundText: 'A página que procura não existe ou foi movida.',
+    backHome: 'Voltar ao início',
   },
   'ru': {
     title: 'Pianpker',
@@ -91,6 +145,12 @@ export const ui: Record<Language, Translation> = {
     tags: 'Теги',
     about: 'О себе',
     toc: 'Оглавление',
+    search: 'Поиск',
+    searchPlaceholder: 'Поиск по записям…',
+    searchEmpty: 'Ничего не найдено',
+    notFoundTitle: 'Здесь ничего не написано',
+    notFoundText: 'Страница, которую вы ищете, не существует или была перемещена.',
+    backHome: 'На главную',
   },
   'zh': {
     title: '落纸之间',
@@ -100,6 +160,12 @@ export const ui: Record<Language, Translation> = {
     tags: '标签',
     about: '关于',
     toc: '目录',
+    search: '搜索',
+    searchPlaceholder: '搜索文章…',
+    searchEmpty: '没有找到相关文章',
+    notFoundTitle: '纸上无此页',
+    notFoundText: '你要找的页面不存在，或已移往别处。',
+    backHome: '回到首页',
   },
   'zh-tw': {
     title: '落紙之間',
@@ -109,5 +175,11 @@ export const ui: Record<Language, Translation> = {
     tags: '標籤',
     about: '關於',
     toc: '目錄',
+    search: '搜尋',
+    searchPlaceholder: '搜尋文章…',
+    searchEmpty: '沒有找到相關文章',
+    notFoundTitle: '紙上無此頁',
+    notFoundText: '你要找的頁面不存在，或已移往別處。',
+    backHome: '回到首頁',
   },
 }

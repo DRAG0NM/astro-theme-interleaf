@@ -6,8 +6,13 @@ import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
 import CodeCopyButton from '@/components/Widgets/CodeCopyButton.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
+import ImageInk from '@/components/Widgets/ImageInk.astro'
 import ImageZoom from '@/components/Widgets/ImageZoom.astro'
 import MediaEmbed from '@/components/Widgets/MediaEmbed.astro'
+import ReadingPosition from '@/components/Widgets/ReadingPosition.astro'
+// Search is disabled for now; restore this import and <Search /> below to enable it.
+// import Search from '@/components/Widgets/Search.astro'
+import Sidenotes from '@/components/Widgets/Sidenotes.astro'
 import { themeConfig } from '@/config'
 import Head from '@/layouts/Head.astro'
 import { getPageInfo } from '@/utils/page'
@@ -17,6 +22,7 @@ import '@/styles/font.css'
 import '@/styles/global.css'
 import '@/styles/lqip.css'
 import '@/styles/markdown.css'
+// import '@/styles/search.css'
 import '@/styles/transition.css'
 
 interface Props {
@@ -43,6 +49,7 @@ const MarginBottom = isPost && themeConfig.comment.enabled
 >
   <Head {postTitle} {postDescription} {postSlug} />
   <body>
+    {isPost && <div id="reading-progress" aria-hidden="true" />}
     <div
       class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh"
       p="x-[min(7.25vw,3.731rem)] y-10"
@@ -60,5 +67,9 @@ const MarginBottom = isPost && themeConfig.comment.enabled
     <GithubCard />
     <MediaEmbed />
     <ImageZoom />
+    <ImageInk />
+    {/* <Search /> */}
+    <Sidenotes />
+    <ReadingPosition />
   </body>
 </html>

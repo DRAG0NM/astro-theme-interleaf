@@ -1,21 +1,92 @@
-/* View Transition */
+/* Motion Tokens >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* One easing and a short set of durations, so every movement on the site
+ * shares the same breath: quick to start, long and quiet to settle. */
+:root {
+  --ease-ink: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-ink: 0.8s;
+  --dur-hover: 0.5s;
+  --stagger: 0.045s;
+}
+
+/* Theme Toggle: Ink Drop >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* To dark: a drop of ink falls on the toggle and bleeds across the paper
+ * with a ragged, fibrous edge. To light: the ink dries back into the drop.
+ * Button.astro sets --ink-x / --ink-y (drop centre) and --ink-size (a blob
+ * large enough to cover the farthest corner). */
+:root {
+  /* Turbulence-displaced disc: the edge looks absorbed by paper fibres.
+   * Its solid core is ~30% of the image, so --ink-size is ~3.4x the radius. */
+  --ink-blob: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='f' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='3' seed='11'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='20' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeGaussianBlur stdDeviation='0.9'/%3E%3C/filter%3E%3Ccircle cx='100' cy='100' r='70' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+@keyframes ink-spread {
+  from {
+    -webkit-mask-size: 0 0;
+    mask-size: 0 0;
+    -webkit-mask-position: var(--ink-x) var(--ink-y);
+    mask-position: var(--ink-x) var(--ink-y);
+  }
+  to {
+    -webkit-mask-size: var(--ink-size) var(--ink-size);
+    mask-size: var(--ink-size) var(--ink-size);
+    -webkit-mask-position: calc(var(--ink-x) - var(--ink-size) / 2) calc(var(--ink-y) - var(--ink-size) / 2);
+    mask-position: calc(var(--ink-x) - var(--ink-size) / 2) calc(var(--ink-y) - var(--ink-size) / 2);
+  }
+}
+
+/* Fallback for browsers without mask support. */
 @keyframes reveal {
   from {
     clip-path: inset(var(--from));
   }
 }
 
+::view-transition-old(theme-toggle-transition),
 ::view-transition-new(theme-toggle-transition) {
-  z-index: 99;
-  clip-path: inset(0 0 0 0);
-
   /* Override Astro's wildcard reduced-motion reset only for the explicit
-   * theme transition. Button.astro still respects config.reduceMotion. */
-  animation: reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+   * theme transition. Button.astro still respects the motion preference. */
+  animation: none !important;
+  mix-blend-mode: normal;
 }
-::view-transition-old(theme-toggle-transition) {
+
+/* Ink bleeds out: the new (dark) page spreads over the old one. */
+html[data-theme-changing='to-dark']::view-transition-new(theme-toggle-transition) {
+  z-index: 99;
+  -webkit-mask-image: var(--ink-blob);
+  mask-image: var(--ink-blob);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ink-spread 1.15s cubic-bezier(0.2, 0.7, 0.25, 1) both !important;
+}
+html[data-theme-changing='to-dark']::view-transition-old(theme-toggle-transition) {
   z-index: -1;
-  animation: none;
+}
+
+/* Ink dries back: the old (dark) page stays on top and shrinks into the drop. */
+html[data-theme-changing='to-light']::view-transition-old(theme-toggle-transition) {
+  z-index: 99;
+  -webkit-mask-image: var(--ink-blob);
+  mask-image: var(--ink-blob);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: ink-spread 0.95s cubic-bezier(0.55, 0, 0.75, 0.3) reverse both !important;
+}
+html[data-theme-changing='to-light']::view-transition-new(theme-toggle-transition) {
+  z-index: -1;
+}
+
+@supports not ((mask-image: none) or (-webkit-mask-image: none)) {
+  html[data-theme-changing]::view-transition-old(theme-toggle-transition) {
+    z-index: -1;
+    animation: none !important;
+  }
+  html[data-theme-changing]::view-transition-new(theme-toggle-transition) {
+    z-index: 99;
+    clip-path: inset(0 0 0 0);
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
 }
 
 html.dark {
@@ -25,51 +96,169 @@ html:not(.dark) {
   --from: 100% 0 0 0;
 }
 
+/* Theme Toggle Icon: Crescent >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Light: only the hollow brush ring. Dark: a crescent moon swells out from
+ * inside the ring as the shadow that hid it slides away; it sinks back
+ * into the ring when returning to light. */
+.theme-toggle-shadow {
+  transform: translate(0, 0);
+  transition: transform 0.8s var(--ease-ink);
+}
+html.dark .theme-toggle-shadow {
+  transform: translate(3.4px, -2.6px);
+  transition-delay: 0.08s;
+}
+.theme-toggle-disc {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.35);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.8s var(--ease-ink);
+}
+html.dark .theme-toggle-disc {
+  opacity: 1;
+  transform: scale(1);
+}
+html.reduce-motion :is(.theme-toggle-shadow, .theme-toggle-disc) {
+  transition: none;
+}
+
 /* Disable animations for special elements during theme switching */
 html[data-theme-changing] [data-disable-theme-toggle-transition] {
   view-transition-name: none !important;
 }
 
+/* Page Navigation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Shared titles and dates glide between pages on the same curve as
+ * everything else, instead of the browser's default linear-ish morph. */
+::view-transition-group(*) {
+  animation-duration: 0.55s;
+  animation-timing-function: var(--ease-ink);
+}
+
+/* Language Switch >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Switching language rewrites the page block by block, in two clean beats:
+ * the old blocks lift off the paper top to bottom, then the new blocks are
+ * written in one after another, each from left to right behind a soft brush
+ * edge. Button.astro names up to 14 blocks per page (lang-o-*, lang-n-*)
+ * and sets their delays; everything else moves with the page as a whole.
+ * Only opacity and masks animate (no blur), so it stays smooth on phones. */
+@keyframes lang-write {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+@keyframes lang-sink {
+  to {
+    opacity: 0;
+  }
+}
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-group(*) {
+  animation-duration: 0s !important;
+}
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-old(*) {
+  z-index: 0;
+  animation: lang-sink 0.25s cubic-bezier(0.4, 0, 1, 1) both !important;
+}
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, #000 47%, transparent 53%);
+  mask-image: linear-gradient(to right, #000 47%, transparent 53%);
+  -webkit-mask-size: 250% 100%;
+  mask-size: 250% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: lang-write 0.65s cubic-bezier(0.45, 0.05, 0.25, 1) 0.3s both !important;
+}
+
+/* Arriving by language switch, the page is already being "written";
+ * skip the per-paragraph entry animation so the two don't stack. */
+html[data-lang-arrived] :is(
+  #toc-container,
+  #post-date,
+  #post-content > *,
+  #toc-desktop-icon,
+  #toc-links-list > *,
+  #back-button,
+  .post-list > li > *
+) {
+  animation: none !important;
+}
+
 /* Content Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-@keyframes fadeInUp {
+/* Text settles onto the page the way ink settles into paper: a short drift,
+ * a soft focus that sharpens, no long slide. */
+@keyframes ink-in {
   from {
     opacity: 0;
-    transform: translateY(3rem);
+    filter: blur(3px);
+    transform: translateY(0.6rem);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    filter: none;
+    transform: none;
   }
 }
 
-@keyframes fadeInUpMini {
+@keyframes ink-in-side {
   from {
     opacity: 0;
-    transform: translateY(1.5rem);
+    filter: blur(2px);
+    transform: translateX(0.4rem);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(0.5rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+    filter: none;
+    transform: none;
   }
 }
 
 /* Keep normal content visible by default. Animation is opt-in so a failed
  * stylesheet, unsupported animation, or late client-side navigation cannot
  * leave content hidden. */
+html:not(.reduce-motion) :is(
+  #post-content > *,
+  #toc-links-list > *,
+  #toc-desktop-icon,
+  .post-list > li > :not(h3, [data-astro-transition-scope])
+) {
+  animation: ink-in var(--dur-ink) var(--ease-ink) both;
+  animation-delay: calc(var(--base-delay, 0.15s) + var(--i, 0) * var(--stagger));
+}
+
+/* Stagger index, capped so long pages never wait on their tail. */
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(2) { --i: 1; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(3) { --i: 2; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(4) { --i: 3; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(5) { --i: 4; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(6) { --i: 5; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(7) { --i: 6; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(8) { --i: 7; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(9) { --i: 8; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(10) { --i: 9; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(11) { --i: 10; }
+:is(#post-content, #toc-links-list, .post-list) > :nth-child(n+12) { --i: 11; }
+
+/* Each year section on the home page starts a little after the previous one. */
+main > section:nth-of-type(2) .post-list > li { --base-delay: 0.25s; }
+main > section:nth-of-type(n+3) .post-list > li { --base-delay: 0.35s; }
+
+#toc-links-list > *,
+#toc-desktop-icon {
+  --base-delay: 0.2s;
+}
+
 @media (max-width: 1535px) {
   html:not(.reduce-motion) #toc-container {
-    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+    animation: ink-in var(--dur-ink) var(--ease-ink) both;
     animation-delay: 0.1s;
   }
 }
@@ -78,96 +267,116 @@ html[data-theme-changing] [data-disable-theme-toggle-transition] {
   /* Astro marks shared elements with a reduced-motion animation reset.
    * The project-level motion setting controls this entry animation instead. */
   html:not(.reduce-motion) #post-date {
-    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both !important;
+    animation: ink-in var(--dur-ink) var(--ease-ink) both !important;
     animation-delay: 0.1s !important;
   }
 
   html:not(.reduce-motion) #back-button {
-    animation: fadeInLeft 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+    animation: ink-in-side var(--dur-ink) var(--ease-ink) both;
     animation-delay: 0.2s;
   }
 }
 
-html:not(.reduce-motion) #post-content > * {
-  animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both;
-}
-
-html:not(.reduce-motion) #post-content > *:nth-child(1) { animation-delay: 0.15s; }
-html:not(.reduce-motion) #post-content > *:nth-child(2) { animation-delay: 0.2s; }
-html:not(.reduce-motion) #post-content > *:nth-child(3) { animation-delay: 0.25s; }
-html:not(.reduce-motion) #post-content > *:nth-child(4) { animation-delay: 0.3s; }
-html:not(.reduce-motion) #post-content > *:nth-child(5) { animation-delay: 0.35s; }
-html:not(.reduce-motion) #post-content > *:nth-child(6) { animation-delay: 0.4s; }
-html:not(.reduce-motion) #post-content > *:nth-child(7) { animation-delay: 0.45s; }
-html:not(.reduce-motion) #post-content > *:nth-child(8) { animation-delay: 0.5s; }
-html:not(.reduce-motion) #post-content > *:nth-child(9) { animation-delay: 0.55s; }
-html:not(.reduce-motion) #post-content > *:nth-child(10) { animation-delay: 0.6s; }
-html:not(.reduce-motion) #post-content > *:nth-child(11) { animation-delay: 0.65s; }
-html:not(.reduce-motion) #post-content > *:nth-child(12) { animation-delay: 0.7s; }
-html:not(.reduce-motion) #post-content > *:nth-child(13) { animation-delay: 0.75s; }
-html:not(.reduce-motion) #post-content > *:nth-child(14) { animation-delay: 0.8s; }
-html:not(.reduce-motion) #post-content > *:nth-child(15) { animation-delay: 0.85s; }
-html:not(.reduce-motion) #post-content > *:nth-child(n+16) { animation-delay: 0.9s; }
-
+/* Small screens: blur is costly and the fold is short, so animate only what
+ * is first seen, and without blur. */
 @media (max-width: 767px) {
-  html:not(.reduce-motion) #post-content > *:nth-child(n+8) {
+  html:not(.reduce-motion) :is(#post-content > *, .post-list > li > *) {
+    animation-name: ink-in-mobile;
+  }
+  html:not(.reduce-motion) #post-content > :nth-child(n+8),
+  html:not(.reduce-motion) .post-list > :nth-child(n+8) > * {
     animation: none;
   }
 }
 
-@media (min-width: 1535px) {
-  html:not(.reduce-motion) #toc-desktop-icon {
-    animation: fadeInUpMini 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both;
-    animation-delay: 0.175s;
+@keyframes ink-in-mobile {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
   }
-
-  html:not(.reduce-motion) #toc-links-list > * {
-    animation: fadeInUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  to {
+    opacity: 1;
+    transform: none;
   }
-
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(1) { animation-delay: 0.175s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(2) { animation-delay: 0.2s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(3) { animation-delay: 0.225s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(4) { animation-delay: 0.25s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(5) { animation-delay: 0.275s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(6) { animation-delay: 0.3s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(7) { animation-delay: 0.325s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(8) { animation-delay: 0.35s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(9) { animation-delay: 0.375s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(10) { animation-delay: 0.4s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(11) { animation-delay: 0.425s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(12) { animation-delay: 0.45s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(13) { animation-delay: 0.475s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(14) { animation-delay: 0.5s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(15) { animation-delay: 0.525s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(16) { animation-delay: 0.55s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(17) { animation-delay: 0.575s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(18) { animation-delay: 0.6s; }
-  html:not(.reduce-motion) #toc-links-list > *:nth-child(n+19) { animation-delay: 0.625s; }
 }
 
+/* Image Ink Settle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Added by ImageInk.astro when a still-loading image arrives. */
+@keyframes ink-settle {
+  from {
+    filter: blur(10px) grayscale(0.7) contrast(0.85);
+  }
+}
+.ink-settle {
+  animation: ink-settle 0.9s var(--ease-ink) both;
+}
+
+/* Reading Progress >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* A single vermilion hairline across the top of a post, driven by scroll.
+ * No script; browsers without scroll timelines simply don't show it. */
+#reading-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: block;
+    width: 100%;
+    height: 2px;
+    pointer-events: none;
+    background-color: oklch(var(--un-preset-theme-colors-accent) / 0.7);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes reading-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Reduced Motion >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* Reduced motion must always leave every animated region fully visible. */
-html.reduce-motion #toc-container,
-html.reduce-motion #post-date,
-html.reduce-motion #post-content > *,
-html.reduce-motion #toc-desktop-icon,
-html.reduce-motion #toc-links-list > *,
-html.reduce-motion #back-button {
-  opacity: 1;
-  transform: none;
-  animation: none !important;
-}
-
-@media print {
+html.reduce-motion :is(
   #toc-container,
   #post-date,
   #post-content > *,
   #toc-desktop-icon,
   #toc-links-list > *,
-  #back-button {
+  #back-button,
+  .post-list > li > *
+) {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  animation: none !important;
+}
+
+@media print {
+  :is(
+    #toc-container,
+    #post-date,
+    #post-content > *,
+    #toc-desktop-icon,
+    #toc-links-list > *,
+    #back-button,
+    .post-list > li > *
+  ) {
     opacity: 1 !important;
+    filter: none !important;
     transform: none !important;
     animation: none !important;
+  }
+
+  #reading-progress {
+    display: none !important;
   }
 }
 
@@ -179,5 +388,4 @@ html.reduce-motion {
   .highlight-static {
     --at-apply: 'transition-inherit';
   }
-
 }

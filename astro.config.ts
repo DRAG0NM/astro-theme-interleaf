@@ -11,6 +11,8 @@ import remarkMath from 'remark-math'
 import UnoCSS from 'unocss/astro'
 import { base, defaultLocale, themeConfig } from './src/config'
 import { langMap } from './src/i18n/config'
+// Search index (disabled with search for now)
+// import { pagefind } from './src/plugins/pagefind-integration.mjs'
 import { rehypeCodeCopyButton } from './src/plugins/rehype-code-copy-button.mjs'
 import { rehypeExternalLinks } from './src/plugins/rehype-external-links.mjs'
 import { rehypeHeadingAnchor } from './src/plugins/rehype-heading-anchor.mjs'
@@ -64,6 +66,7 @@ export default defineConfig({
       JavaScript: true,
       SVG: false,
     }),
+    // pagefind(),
   ],
   markdown: {
     remarkPlugins: [

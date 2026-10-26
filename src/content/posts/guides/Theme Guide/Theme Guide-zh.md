@@ -299,6 +299,34 @@ body{color:oklch(25% 0.005 298)} /* 字体颜色 */
 </style>
 ```
 
+## 动效与阅读
+
+所有动效都会遵循访客系统的“减少动态效果”设置。若要为所有人关闭，请在 `src/config.ts` 的 `global` 中设置 `reduceMotion: true`。动效样式位于 `src/styles/transition.css`，主题与语言切换脚本位于 `src/scripts/`。
+
+### 主题与语言切换
+
+切换到深色模式时，一滴墨落在开关上，向整页晕开；切回浅色时，墨又收干成一滴。切换语言会逐块重写页面：旧的内容块自上而下淡出，新的内容块随后依次写入。每页最多有 14 个内容块单独播放动画，其余部分整体移动。
+
+### 旁注
+
+标准 Markdown 脚注无需额外语法：
+
+```markdown
+A sentence with a note.[^1]
+
+[^1]: The note itself.
+```
+
+在边距足够的宽屏上，注释显示在正文旁边，与引用处齐平。在较窄的屏幕上，点按或悬停引用即可在其下方展开注释。文末仍保留常规的脚注列表，用于打印。
+
+### 阅读位置
+
+每篇文章都会记住读者读到的位置，仅保存在读者自己的浏览器中（`localStorage`，最多 50 篇文章，保留 90 天）。接近顶部或末尾的位置不会被保存，指向标题的链接始终优先。
+
+### 站内搜索
+
+主题自带由 [Pagefind](https://pagefind.app/) 驱动的全页搜索对话框，默认处于关闭状态。若要启用，请取消注释 `src/layouts/Layout.astro`、`src/components/Button.astro` 和 `astro.config.ts` 中标有“Search”的行。索引会在 `astro build` 之后自动生成，`astro dev` 中不存在索引。
+
 ## 创建新文章
 
 执行 `pnpm new-post <filename>` 创建新文章，可在 `src/content/posts/` 目录中编辑。

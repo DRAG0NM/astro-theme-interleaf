@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "astro check && astro dev",
     "build": "astro check && astro build && tsx scripts/apply-lqip.ts",
+    "index-search": "npx -y pagefind@^1 --site dist",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
