@@ -1,6 +1,25 @@
-# Pianpker · 落紙之間
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/brand/banner-dark.svg">
+    <img alt="Pianpker · 落纸之间 · Less, between the lines" src="../../assets/brand/banner-light.svg" width="760">
+  </picture>
+</p>
 
-> 字落有間，讀來無距。
+<p align="center">
+  <i>字落有間，讀來無距。</i>
+</p>
+
+<p align="center">
+  <a href="https://astro.build/"><img alt="Astro 6" src="https://img.shields.io/badge/Astro-6-2b2a28?style=flat-square&logo=astro&logoColor=f5f3ee"></a>
+  <a href="https://unocss.dev/"><img alt="UnoCSS" src="https://img.shields.io/badge/UnoCSS-66-2b2a28?style=flat-square&logo=unocss&logoColor=f5f3ee"></a>
+  <a href="https://pianpker.pages.dev/en/"><img alt="6 languages" src="https://img.shields.io/badge/i18n-6%20languages-77736b?style=flat-square"></a>
+  <a href="../../LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/license-MIT-77736b?style=flat-square"></a>
+  <a href="https://pianpker.pages.dev"><img alt="Live demo" src="https://img.shields.io/badge/demo-pianpker.pages.dev-a54139?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="../../README.md">English</a> ｜ <a href="../../assets/docs/README.zh.md">简体中文</a> ｜ <a href="../../assets/docs/README.zh-tw.md">繁體中文</a> ｜ <a href="../../assets/docs/README.ja.md">日本語</a> ｜ <a href="../../assets/docs/README.fr.md">Français</a> ｜ <a href="../../assets/docs/README.ru.md">Русский</a>
+</p>
 
 Pianpker 是 [Drag0nM](https://github.com/DRAG0NM) 的個人部落格專案。它以文字閱讀為中心，用克制的留白、和紙暖色、墨色層次與少量朱紅，建立安靜而清晰的數位排版體驗。
 
