@@ -1,0 +1,264 @@
+<!--
+  Footnotes, brought to where they are read.
+  - Wide screens with enough margin: each note sits in the blank margin to the
+    right of the text, level with its reference (Tufte-style sidenotes); the
+    list at the end of the post is hidden on screen but kept for print.
+  - Everywhere else: tapping or hovering a reference opens a small note card
+    right under it instead of jumping to the bottom of the page.
+-->
+<script>
+const MIN_MARGIN = 200 // px of free margin needed for sidenotes
+const NOTE_GAP = 12 // px between stacked sidenotes
+
+type Note = {
+  ref: HTMLAnchorElement
+  label: string
+  html: string
+}
+
+let cleanup: (() => void) | null = null
+
+function collectNotes(content: HTMLElement): Note[] {
+  const refs = content.querySelectorAll<HTMLAnchorElement>('a[data-footnote-ref]')
+  const notes: Note[] = []
+
+  refs.forEach((ref) => {
+    const id = decodeURIComponent(ref.hash.slice(1))
+    const item = id ? document.getElementById(id) : null
+    if (!item) {
+      return
+    }
+    const clone = item.cloneNode(true) as HTMLElement
+    clone.querySelectorAll('[data-footnote-backref]').forEach(el => el.remove())
+    notes.push({ ref, label: ref.textContent?.trim() ?? '', html: clone.innerHTML.trim() })
+  })
+  return notes
+}
+
+function buildNote(note: Note, className: string) {
+  const aside = document.createElement('aside')
+  aside.className = className
+  aside.setAttribute('role', 'note')
+  const num = document.createElement('span')
+  num.className = 'sidenote-num'
+  num.textContent = note.label
+  const body = document.createElement('div')
+  body.className = 'sidenote-body'
+  // Footnote content comes from this post's own rendered Markdown.
+  body.innerHTML = note.html
+  aside.append(num, body)
+  return aside
+}
+
+function freeMargin(content: HTMLElement) {
+  const column = document.querySelector('body > div > header')
+  const contentRight = content.getBoundingClientRect().right
+  const columnLeft = column instanceof HTMLElement && getComputedStyle(column).position === 'fixed'
+    ? column.getBoundingClientRect().left
+    : window.innerWidth
+  return columnLeft - contentRight
+}
+
+// Margin mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function setupMarginNotes(content: HTMLElement, notes: Note[], margin: number) {
+  const root = document.documentElement
+  const asides = notes.map((note, i) => {
+    const aside = buildNote(note, 'sidenote')
+    aside.style.setProperty('--i', String(i))
+    aside.style.width = `${Math.min(margin - 56, 224)}px`
+    content.append(aside)
+    return aside
+  })
+  root.classList.add('sidenotes-on')
+
+  const place = () => {
+    const top = content.getBoundingClientRect().top
+    let floor = 0
+    notes.forEach((note, i) => {
+      const y = Math.max(note.ref.getBoundingClientRect().top - top - 2, floor)
+      asides[i].style.top = `${y}px`
+      floor = y + asides[i].offsetHeight + NOTE_GAP
+    })
+  }
+
+  // Pointing at either end of a note lights up the other.
+  const linkHover = notes.map((note, i) => {
+    const on = () => {
+      note.ref.classList.add('is-active')
+      asides[i].classList.add('is-active')
+    }
+    const off = () => {
+      note.ref.classList.remove('is-active')
+      asides[i].classList.remove('is-active')
+    }
+    const click = (e: Event) => e.preventDefault()
+    for (const el of [note.ref, asides[i]]) {
+      el.addEventListener('mouseenter', on)
+      el.addEventListener('mouseleave', off)
+    }
+    note.ref.addEventListener('click', click)
+    return () => {
+      note.ref.removeEventListener('mouseenter', on)
+      note.ref.removeEventListener('mouseleave', off)
+      note.ref.removeEventListener('click', click)
+    }
+  })
+
+  place()
+  const observer = new ResizeObserver(place)
+  observer.observe(content)
+  void document.fonts?.ready.then(place)
+
+  return () => {
+    observer.disconnect()
+    linkHover.forEach(fn => fn())
+    asides.forEach(a => a.remove())
+    root.classList.remove('sidenotes-on')
+  }
+}
+
+// Popover mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function setupPopovers(content: HTMLElement, notes: Note[]) {
+  let open: { card: HTMLElement, ref: HTMLAnchorElement } | null = null
+  let hoverTimer = 0
+
+  const close = () => {
+    open?.card.remove()
+    open?.ref.classList.remove('is-active')
+    open = null
+  }
+
+  const show = (note: Note) => {
+    if (open?.ref === note.ref) {
+      return
+    }
+    close()
+    const card = buildNote(note, 'footnote-card')
+    content.append(card)
+
+    const box = content.getBoundingClientRect()
+    const r = note.ref.getBoundingClientRect()
+    const width = Math.min(box.width, 352)
+    const left = Math.min(Math.max(r.left - box.left - 24, 0), box.width - width)
+    card.style.width = `${width}px`
+    card.style.left = `${left}px`
+    card.style.top = `${r.bottom - box.top + 8}px`
+
+    note.ref.classList.add('is-active')
+    open = { card, ref: note.ref }
+  }
+
+  const handlers = notes.map((note) => {
+    const click = (e: Event) => {
+      e.preventDefault()
+      if (open?.ref === note.ref) {
+        close()
+      }
+      else {
+        show(note)
+      }
+    }
+    const enter = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') {
+        window.clearTimeout(hoverTimer)
+        hoverTimer = window.setTimeout(() => show(note), 120)
+      }
+    }
+    const leave = (e: PointerEvent) => {
+      if (e.pointerType === 'mouse') {
+        window.clearTimeout(hoverTimer)
+        hoverTimer = window.setTimeout(() => {
+          if (!open?.card.matches(':hover')) {
+            close()
+          }
+        }, 200)
+      }
+    }
+    note.ref.addEventListener('click', click)
+    note.ref.addEventListener('pointerenter', enter)
+    note.ref.addEventListener('pointerleave', leave)
+    return () => {
+      note.ref.removeEventListener('click', click)
+      note.ref.removeEventListener('pointerenter', enter)
+      note.ref.removeEventListener('pointerleave', leave)
+    }
+  })
+
+  const outside = (e: Event) => {
+    if (open && e.target instanceof Node
+      && !open.card.contains(e.target) && !open.ref.contains(e.target)) {
+      close()
+    }
+  }
+  const leaveCard = (e: Event) => {
+    if (open && e.target === open.card) {
+      close()
+    }
+  }
+  const esc = (e: KeyboardEvent) => e.key === 'Escape' && close()
+
+  document.addEventListener('pointerdown', outside)
+  document.addEventListener('pointerleave', leaveCard, true)
+  document.addEventListener('keydown', esc)
+
+  return () => {
+    close()
+    handlers.forEach(fn => fn())
+    document.removeEventListener('pointerdown', outside)
+    document.removeEventListener('pointerleave', leaveCard, true)
+    document.removeEventListener('keydown', esc)
+  }
+}
+
+// Lifecycle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function setup() {
+  cleanup?.()
+  cleanup = null
+
+  const content = document.getElementById('post-content')
+  if (!content) {
+    return
+  }
+  const notes = collectNotes(content)
+  if (notes.length === 0) {
+    return
+  }
+
+  let modeCleanup: (() => void) | null = null
+  let wide: boolean | null = null
+
+  const apply = () => {
+    const margin = freeMargin(content)
+    const nextWide = margin >= MIN_MARGIN
+    if (nextWide === wide) {
+      return
+    }
+    wide = nextWide
+    modeCleanup?.()
+    modeCleanup = wide
+      ? setupMarginNotes(content, notes, margin)
+      : setupPopovers(content, notes)
+  }
+
+  let timer = 0
+  const onResize = () => {
+    window.clearTimeout(timer)
+    timer = window.setTimeout(apply, 150)
+  }
+
+  apply()
+  window.addEventListener('resize', onResize)
+
+  cleanup = () => {
+    window.clearTimeout(timer)
+    window.removeEventListener('resize', onResize)
+    modeCleanup?.()
+  }
+}
+
+document.addEventListener('astro:page-load', setup)
+document.addEventListener('astro:before-swap', () => {
+  cleanup?.()
+  cleanup = null
+})
+</script>
