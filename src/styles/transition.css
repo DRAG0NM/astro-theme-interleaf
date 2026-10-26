@@ -96,23 +96,29 @@ html:not(.dark) {
   --from: 100% 0 0 0;
 }
 
-/* Theme Toggle Icon: Eclipse >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Inside the brush ring, an ink disc is the sun; in dark mode a shadow
- * slides across it and leaves a crescent moon. */
+/* Theme Toggle Icon: Crescent >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Light: only the hollow brush ring. Dark: a crescent moon swells out from
+ * inside the ring as the shadow that hid it slides away; it sinks back
+ * into the ring when returning to light. */
 .theme-toggle-shadow {
-  transform: translate(13px, -3px);
-  transition: transform 0.9s var(--ease-ink);
+  transform: translate(0, 0);
+  transition: transform 0.8s var(--ease-ink);
 }
 html.dark .theme-toggle-shadow {
   transform: translate(3.4px, -2.6px);
+  transition-delay: 0.08s;
 }
 .theme-toggle-disc {
   transform-box: fill-box;
   transform-origin: center;
-  transform: scale(0.9);
-  transition: transform 0.9s var(--ease-ink);
+  opacity: 0;
+  transform: scale(0.35);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.8s var(--ease-ink);
 }
 html.dark .theme-toggle-disc {
+  opacity: 1;
   transform: scale(1);
 }
 html.reduce-motion :is(.theme-toggle-shadow, .theme-toggle-disc) {
@@ -133,29 +139,57 @@ html[data-theme-changing] [data-disable-theme-toggle-transition] {
 }
 
 /* Language Switch >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Switching language rewrites the page in place: the old script dissolves
- * like ink lifting off wet paper, then the new script inks back in, a beat
- * later. Button.astro marks the navigation with data-lang-switching. */
-@keyframes lang-out {
+/* Switching language rewrites the page the way a brush writes a line: the
+ * new text is laid down from left to right behind a soft, wet edge while
+ * the old text quietly sinks back into the paper. Only opacity and a mask
+ * move (no blur), so it stays smooth on phones.
+ * Button.astro puts data-lang-arrived on the incoming page and leaves it
+ * there, so nothing changes style mid-transition. */
+@keyframes lang-write {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+@keyframes lang-sink {
   to {
     opacity: 0;
-    filter: blur(6px);
   }
 }
-@keyframes lang-in {
-  from {
-    opacity: 0;
-    filter: blur(6px);
-  }
-}
-html[data-lang-switching]::view-transition-group(*) {
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-group(*) {
   animation-duration: 0s !important;
 }
-html[data-lang-switching]::view-transition-old(*) {
-  animation: lang-out 0.38s cubic-bezier(0.4, 0, 1, 1) both !important;
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-old(*) {
+  z-index: 0;
+  animation: lang-sink 0.3s ease-in 0.6s both !important;
 }
-html[data-lang-switching]::view-transition-new(*) {
-  animation: lang-in 0.8s var(--ease-ink) 0.16s both !important;
+html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, #000 47%, transparent 53%);
+  mask-image: linear-gradient(to right, #000 47%, transparent 53%);
+  -webkit-mask-size: 250% 100%;
+  mask-size: 250% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: lang-write 0.9s cubic-bezier(0.45, 0.05, 0.25, 1) both !important;
+}
+
+/* Arriving by language switch, the page is already being "written";
+ * skip the per-paragraph entry animation so the two don't stack. */
+html[data-lang-arrived] :is(
+  #toc-container,
+  #post-date,
+  #post-content > *,
+  #toc-desktop-icon,
+  #toc-links-list > *,
+  #back-button,
+  .post-list > li > *
+) {
+  animation: none !important;
 }
 
 /* Content Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */

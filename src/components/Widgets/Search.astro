@@ -32,7 +32,10 @@ const base = themeConfig.site.base.endsWith('/')
         aria-label={currentUI.search}
         aria-controls="search-results"
       />
-      <kbd class="search-esc" aria-hidden="true">Esc</kbd>
+      <button type="button" class="search-close" aria-label="Close">
+        <kbd class="search-close-key" aria-hidden="true">Esc</kbd>
+        <span class="search-close-cross" aria-hidden="true"></span>
+      </button>
     </div>
     <p id="search-status" class="search-status" aria-live="polite"></p>
     <ol id="search-results" class="search-results"></ol>
@@ -158,7 +161,8 @@ document.addEventListener('click', (e) => {
   }
   // Clicking the blank paper (outside the field and results) closes it.
   const dialog = e.target.closest('#search-dialog')
-  if (dialog && !e.target.closest('.search-field, .search-results a')) {
+  if (e.target.closest('.search-close')
+    || (dialog && !e.target.closest('.search-field, .search-results a'))) {
     closeSearch()
   }
   // Following a result: close first so the page transition starts clean.
