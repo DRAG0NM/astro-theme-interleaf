@@ -20,6 +20,9 @@ Pianpker（落纸之间）是一个以阅读为中心的多语言静态博客主
 - Astro 6 and UnoCSS
 - Simplified Chinese, Traditional Chinese, English, French, Japanese, and Russian content
 - Light and dark themes with Astro ClientRouter and view transitions
+- Ink-inspired motion: ink-drop theme switch, block-by-block language rewrite, reading progress
+- Margin sidenotes for footnotes on wide screens, note cards on small ones
+- Remembers each reader's position in a post
 - Refined multilingual typography and local font loading
 - Markdown, MDX, KaTeX, Mermaid, table of contents, and code copy
 - Image captions, galleries, zoom, and external media embeds
@@ -36,6 +39,16 @@ Pianpker treats wabi-sabi, yūgen, mono no aware, and *ma* as editorial principl
 - vermilion is reserved for interaction and seal-like emphasis;
 - cards, shadows, glass effects, and saturated gradients do not define the visual hierarchy;
 - every visible element, animation, and value should have a reason to exist.
+
+## Motion and Reading
+
+Motion follows the same restraint as the layout: one easing curve, short distances, only opacity, masks and transforms, and everything turns off with the system "reduce motion" setting or `reduceMotion: true` in `src/config.ts`.
+
+- **Theme switch**: a drop of ink lands on the toggle and bleeds across the page; switching back, the ink dries into the drop. The icon is a hollow brush ring; in dark mode a crescent swells out of it.
+- **Language switch**: the visible blocks of the page lift off top to bottom, then the new language is written in block by block, left to right.
+- **Entry**: text settles into the page with a short drift and soft focus; images still loading sharpen from a pale, soft state.
+- **Reading aids**: a vermilion hairline shows reading progress; footnotes appear as sidenotes in the margin when there is room, otherwise as cards under the reference; the last reading position of each post is restored on return.
+- **Search (disabled)**: a Pagefind-based search dialog is included but commented out. To enable it, uncomment the marked lines in `src/layouts/Layout.astro`, `src/components/Button.astro` and `astro.config.ts`; the index is built after `astro build`.
 
 ## Getting Started
 

@@ -299,6 +299,34 @@ body{color:oklch(25% 0.005 298)} /* couleur de police */
 </style>
 ```
 
+## Mouvement et lecture
+
+Tous les mouvements respectent le réglage système « réduire les animations » du visiteur. Pour les désactiver pour tout le monde, définissez `reduceMotion: true` sous `global` dans `src/config.ts`. Les styles de mouvement se trouvent dans `src/styles/transition.css` ; les scripts de changement de thème et de langue sont dans `src/scripts/`.
+
+### Changement de thème et de langue
+
+Le passage au mode sombre dépose une goutte d’encre sur le bouton et la laisse se répandre sur la page ; le retour au mode clair la fait sécher en goutte. Changer de langue réécrit la page bloc par bloc : les anciens blocs s’effacent de haut en bas, puis les nouveaux s’écrivent. Au plus 14 blocs par page sont animés individuellement ; le reste de la page se déplace d’un seul tenant.
+
+### Notes marginales
+
+Les notes de bas de page Markdown standard ne demandent aucune syntaxe supplémentaire :
+
+```markdown
+A sentence with a note.[^1]
+
+[^1]: The note itself.
+```
+
+Sur les grands écrans offrant assez de marge, les notes s’affichent à côté du texte, à la hauteur de leur appel. Sur les écrans plus étroits, toucher ou survoler l’appel ouvre la note juste en dessous. La liste habituelle des notes en fin d’article est conservée pour l’impression.
+
+### Position de lecture
+
+Chaque article mémorise jusqu’où le lecteur est allé, uniquement dans son propre navigateur (`localStorage`, jusqu’à 50 articles pendant 90 jours). Les positions proches du tout début ou de la toute fin ne sont pas conservées, et un lien vers un titre l’emporte toujours.
+
+### Recherche
+
+Une boîte de recherche en plein écran, propulsée par [Pagefind](https://pagefind.app/), est fournie avec le thème mais désactivée. Pour l’activer, décommentez les lignes marquées « Search » dans `src/layouts/Layout.astro`, `src/components/Button.astro` et `astro.config.ts`. L’index est généré automatiquement après `astro build` ; il n’existe pas avec `astro dev`.
+
 ## Création d’un nouvel article
 
 Exécutez `pnpm new-post <filename>` pour créer un nouvel article, qui pourra ensuite être modifié dans le répertoire `src/content/posts/`.
