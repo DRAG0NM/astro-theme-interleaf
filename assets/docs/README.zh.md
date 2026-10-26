@@ -13,7 +13,7 @@ Pianpker 是 [Drag0nM](https://github.com/DRAG0NM) 的个人博客项目。它�
 
 ## 技术与功能
 
-项目基于 Astro 6 与 UnoCSS，支持多语言内容、明暗主题、ClientRouter、Markdown/MDX、KaTeX、Mermaid、目录、图片处理、RSS、Open Graph、响应式布局与打印。
+项目基于 Astro 6 与 UnoCSS，支持多语言内容、明暗主题、ClientRouter、Markdown/MDX、KaTeX、Mermaid、目录、图片处理、RSS、Open Graph、响应式布局与打印。此外还有水墨意趣的动效（墨滴式主题切换与逐块重写的语言切换）、边栏旁注和记忆阅读位置，详见《主题上手指南》。
 
 ## 来源与授权
 

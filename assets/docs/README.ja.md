@@ -6,7 +6,7 @@ Pianpker は [Drag0nM](https://github.com/DRAG0NM) の個人ブログプロジ�
 
 表面的な「和風」の装飾ではなく、侘寂、幽玄、物哀、「間」を組版とリズムの原則として扱います。内容は複雑であっても、表現形式は簡素であり、すべての要素に存在する理由が必要です。
 
-Astro 6 と UnoCSS を基盤とし、多言語コンテンツ、明暗テーマ、ClientRouter、Markdown/MDX、KaTeX、Mermaid、目次、画像処理、RSS、Open Graph、レスポンシブ表示、印刷に対応します。
+Astro 6 と UnoCSS を基盤とし、多言語コンテンツ、明暗テーマ、ClientRouter、Markdown/MDX、KaTeX、Mermaid、目次、画像処理、RSS、Open Graph、レスポンシブ表示、印刷に対応します。このほか、墨を思わせるモーション（墨の滴によるテーマ切り替えと、ブロックごとに書き換える言語切り替え）、傍注、読書位置の記憶を備えています。詳しくは「テーマ使用ガイド」を参照してください。
 
 Pianpker は radishzz による [Retypeset](https://github.com/radishzzz/astro-theme-retypeset) を基に大幅なカスタマイズを行った派生プロジェクトです。元の著作権表示と MIT License は [`LICENSE`](../../LICENSE) に保持されています。詳細は [`NOTICE.md`](../../NOTICE.md) を参照してください。
 

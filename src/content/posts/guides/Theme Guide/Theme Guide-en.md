@@ -299,6 +299,34 @@ body{color:oklch(25% 0.005 298)} /* Font color */
 </style>
 ```
 
+## Motion and Reading
+
+All motion respects the visitor's system "reduce motion" setting. To turn it off for everyone, set `reduceMotion: true` under `global` in `src/config.ts`. Motion styles live in `src/styles/transition.css`; the theme and language switch scripts are in `src/scripts/`.
+
+### Theme and Language Switching
+
+Switching to dark mode drops ink on the toggle and lets it bleed across the page; switching back dries it into the drop. Switching language rewrites the page block by block: the old blocks lift off from top to bottom, then the new ones are written in. Up to 14 blocks per page are animated individually; the rest of the page moves as a whole.
+
+### Sidenotes
+
+Standard Markdown footnotes need no extra syntax:
+
+```markdown
+A sentence with a note.[^1]
+
+[^1]: The note itself.
+```
+
+On wide screens with enough margin, notes are shown beside the text, level with their reference. On narrower screens, tapping or hovering the reference opens the note right below it. The usual footnote list at the end of the post is kept for printing.
+
+### Reading Position
+
+Each post remembers how far the reader got, in their own browser only (`localStorage`, up to 50 posts for 90 days). Positions near the very top or end are not kept, and links to a heading always win.
+
+### Site Search
+
+A full-page search dialog powered by [Pagefind](https://pagefind.app/) ships with the theme but is disabled. To enable it, uncomment the lines marked "Search" in `src/layouts/Layout.astro`, `src/components/Button.astro` and `astro.config.ts`. The index is generated automatically after `astro build`; it does not exist in `astro dev`.
+
 ## Creating a New Post
 
 Run `pnpm new-post <filename>` to create a new post, which can then be edited in the `src/content/posts/` directory.
