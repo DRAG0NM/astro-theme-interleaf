@@ -22,8 +22,10 @@
 </p>
 
 <picture>
-  <source media="(max-width: 640px)" srcset="assets/images/v1/pianpker-zh-mobile.webp">
-  <img alt="Pianpker preview" src="assets/images/v1/pianpker-zh-desktop.webp">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="assets/images/v1.1/home-mobile-dark.webp">
+  <source media="(max-width: 640px)" srcset="assets/images/v1.1/home-mobile-light.webp">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/images/v1.1/home-desktop-dark.webp">
+  <img alt="Pianpker preview" src="assets/images/v1.1/home-desktop-light.webp">
 </picture>
 
 Pianpker is an independently maintained, multilingual static blog theme built with [Astro](https://astro.build/) and [UnoCSS](https://unocss.dev/). It is a deeply customized derivative of [Retypeset](https://github.com/radishzzz/astro-theme-retypeset), shaped around quiet reading, deliberate whitespace, warm paper tones, layered ink colors, and restrained vermilion accents.
@@ -45,6 +47,18 @@ Pianpker（落纸之间）是一个以阅读为中心的多语言静态博客主
 - Responsive layout and theme-aware printing
 - Giscus, Twikoo, and Waline adapters, with comments disabled by default
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/images/v1.1/post-desktop-dark.webp">
+    <img alt="Post page, desktop" src="assets/images/v1.1/post-desktop-light.webp" width="600">
+  </picture>
+  &nbsp;
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/images/v1.1/post-mobile-dark.webp">
+    <img alt="Post page, mobile" src="assets/images/v1.1/post-mobile-light.webp" width="176">
+  </picture>
+</p>
+
 ## Design
 
 Pianpker treats wabi-sabi, yūgen, mono no aware, and *ma* as editorial principles rather than decorative motifs:
@@ -64,6 +78,31 @@ Motion follows the same restraint as the layout: one easing curve, short distanc
 - **Entry**: text settles into the page with a short drift and soft focus; images still loading sharpen from a pale, soft state.
 - **Reading aids**: a vermilion hairline shows reading progress; footnotes appear as sidenotes in the margin when there is room, otherwise as cards under the reference; the last reading position of each post is restored on return.
 - **Search (disabled)**: a Pagefind-based search dialog is included but commented out. To enable it, uncomment the marked lines in `src/layouts/Layout.astro`, `src/components/Button.astro` and `astro.config.ts`; the index is built after `astro build`.
+
+<p align="center">
+  <img alt="Theme switch: a drop of ink bleeds across the page and dries back; the icon becomes a crescent" src="assets/images/v1.1/theme-switch.webp" width="760"><br>
+  <sub>Theme switch: a drop of ink bleeds across the page and dries back; the icon becomes a crescent</sub>
+</p>
+
+<p align="center">
+  <img alt="Language switch: blocks lift off, then the new language is written in block by block" src="assets/images/v1.1/language-switch.webp" width="760"><br>
+  <sub>Language switch: blocks lift off, then the new language is written in block by block</sub>
+</p>
+
+<p align="center">
+  <img alt="A vermilion seal beside the title you point at" src="assets/images/v1.1/title-seal.webp" width="760"><br>
+  <sub>A vermilion seal beside the title you point at</sub>
+</p>
+
+<p align="center">
+  <img alt="Footnotes open as a note card right under the reference" src="assets/images/v1.1/footnote-card.webp" width="760"><br>
+  <sub>Footnotes open as a note card right under the reference</sub>
+</p>
+
+<p align="center">
+  <img alt="A vermilion hairline follows your reading progress" src="assets/images/v1.1/reading-progress.webp" width="760"><br>
+  <sub>A vermilion hairline follows your reading progress</sub>
+</p>
 
 ## Getting Started
 
