@@ -101,6 +101,9 @@ let activeThemeTransition: { finished: Promise<unknown> } | null = null
 
 function clearThemeTransition(root: HTMLElement) {
   root.style.removeProperty('view-transition-name')
+  root.style.removeProperty('--ink-x')
+  root.style.removeProperty('--ink-y')
+  root.style.removeProperty('--ink-size')
   root.removeAttribute('data-theme-changing')
   activeThemeTransition = null
 }
@@ -129,9 +132,24 @@ function handleThemeToggle(e: MouseEvent) {
     return
   }
 
+  // The ink drop lands on the toggle itself (also when triggered by keyboard).
+  const rect = themeButton.getBoundingClientRect()
+  const x = rect.left + rect.width / 2
+  const y = rect.top + rect.height / 2
+  const farthest = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y),
+  )
+  // The blob's solid core is ~30% of its image, see transition.css.
+  const inkSize = Math.ceil(farthest * 3.4)
+  const goingDark = !root.classList.contains('dark')
+
   // Add temporary markers before view transition
   root.style.setProperty('view-transition-name', 'theme-toggle-transition')
-  root.setAttribute('data-theme-changing', '')
+  root.style.setProperty('--ink-x', `${x}px`)
+  root.style.setProperty('--ink-y', `${y}px`)
+  root.style.setProperty('--ink-size', `${inkSize}px`)
+  root.setAttribute('data-theme-changing', goingDark ? 'to-dark' : 'to-light')
 
   // Use View Transitions API for theme toggle
   try {
