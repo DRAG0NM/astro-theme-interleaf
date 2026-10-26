@@ -1,7 +1,7 @@
 {
   "name": "pianpker",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "packageManager": "pnpm@10.33.0",
   "description": "Pianpker — 落纸之间，字落有间，读来无距。",
   "author": "Drag0nM <tyloobylmm@outlook.com>",
