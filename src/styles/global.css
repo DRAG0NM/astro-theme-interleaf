@@ -88,7 +88,48 @@ html.dark .highlight-hover:hover {
   --at-apply: 'origin-bottom-left scale-x-100';
 }
 .highlight-hover::after {
-  --at-apply: 'origin-bottom-right scale-x-0 transition-transform ease-out lg:duration-300';
+  --at-apply: 'origin-bottom-right scale-x-0';
+  transition: transform var(--dur-hover) var(--ease-ink);
+}
+.highlight-hover:focus-visible::after {
+  --at-apply: 'origin-bottom-left scale-x-100';
+}
+.highlight-hover:focus-visible,
+#language-switcher:focus-visible,
+#theme-toggle-button:focus-visible,
+#site-title-link:focus-visible {
+  outline: 1px solid oklch(var(--un-preset-theme-colors-accent) / 0.8);
+  outline-offset: 3px;
+}
+
+/* Post List Seal >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* On wide screens a small vermilion seal is pressed into the margin beside
+ * the title being pointed at. Zero inline width: it never shifts the text. */
+@media (min-width: 1024px) {
+  .post-list h3::before {
+    display: inline-block;
+    width: 0.34em;
+    height: 0.34em;
+    margin-left: -0.94em;
+    margin-right: 0.6em;
+    vertical-align: 0.2em;
+    background-color: oklch(var(--un-preset-theme-colors-accent) / 0.85);
+    border-radius: 1px;
+    content: '';
+    opacity: 0;
+    transform: rotate(-6deg) scale(0.4);
+    transition:
+      opacity 0.25s ease-out,
+      transform var(--dur-hover) var(--ease-ink);
+  }
+  .post-list h3:has(a:hover, a:focus-visible)::before {
+    opacity: 1;
+    transform: rotate(-6deg) scale(1);
+  }
+  html.reduce-motion .post-list h3::before {
+    transition: opacity 0.2s ease-out;
+    transform: rotate(-6deg);
+  }
 }
 
 /* Heading Anchor Link >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */

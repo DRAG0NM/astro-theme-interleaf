@@ -63,7 +63,18 @@
 /* Links */
 .heti :where(a:not(.no-heti):not(.no-heti *)) {
   --at-apply: 'font-medium tracking-normal underline underline-0.075em decoration-secondary/80 underline-offset-0.1em cjk:break-all';
-  --at-apply: 'transition-colors ease-out hover:(c-primary decoration-accent/90) lg:underline-0.1em';
+  --at-apply: 'hover:(c-primary decoration-accent/90) lg:underline-0.1em';
+  transition:
+    color var(--dur-hover) var(--ease-ink),
+    text-decoration-color var(--dur-hover) var(--ease-ink),
+    text-underline-offset var(--dur-hover) var(--ease-ink);
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):hover {
+  text-underline-offset: 0.2em;
+}
+.heti :where(a:not(.no-heti):not(.no-heti *)):focus-visible {
+  outline: 1px solid oklch(var(--un-preset-theme-colors-accent) / 0.8);
+  outline-offset: 2px;
 }
 
 /* Images */
