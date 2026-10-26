@@ -132,9 +132,11 @@ const pageImage = postSlug
     }
   }
 
-  // Check and init the project-level motion preference.
+  // Check and init the motion preference: the project setting, or the
+  // visitor's system-level "reduce motion" choice.
   function initMotionPref(doc = document) {
     const shouldReduceMotion = reduceMotion
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     doc.documentElement.classList.toggle('reduce-motion', shouldReduceMotion)
   }
