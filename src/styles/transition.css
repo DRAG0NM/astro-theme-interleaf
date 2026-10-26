@@ -139,12 +139,12 @@ html[data-theme-changing] [data-disable-theme-toggle-transition] {
 }
 
 /* Language Switch >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
-/* Switching language rewrites the page in two clean beats, never both at
- * once: the old text lifts off the paper first, then, on the blank sheet,
- * the new text is written in from left to right behind a soft brush edge.
- * Only opacity and a mask move (no blur), so it stays smooth on phones.
- * Button.astro puts data-lang-arrived on the incoming page and leaves it
- * there, so nothing changes style mid-transition. */
+/* Switching language rewrites the page block by block, in two clean beats:
+ * the old blocks lift off the paper top to bottom, then the new blocks are
+ * written in one after another, each from left to right behind a soft brush
+ * edge. Button.astro names up to 14 blocks per page (lang-o-*, lang-n-*)
+ * and sets their delays; everything else moves with the page as a whole.
+ * Only opacity and masks animate (no blur), so it stays smooth on phones. */
 @keyframes lang-write {
   from {
     -webkit-mask-position: 100% 0;
@@ -165,7 +165,7 @@ html[data-lang-arrived]:not([data-theme-changing])::view-transition-group(*) {
 }
 html[data-lang-arrived]:not([data-theme-changing])::view-transition-old(*) {
   z-index: 0;
-  animation: lang-sink 0.28s cubic-bezier(0.4, 0, 1, 1) both !important;
+  animation: lang-sink 0.25s cubic-bezier(0.4, 0, 1, 1) both !important;
 }
 html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
   z-index: 1;
@@ -175,7 +175,7 @@ html[data-lang-arrived]:not([data-theme-changing])::view-transition-new(*) {
   mask-size: 250% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  animation: lang-write 0.8s cubic-bezier(0.45, 0.05, 0.25, 1) 0.3s both !important;
+  animation: lang-write 0.65s cubic-bezier(0.45, 0.05, 0.25, 1) 0.3s both !important;
 }
 
 /* Arriving by language switch, the page is already being "written";
