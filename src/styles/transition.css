@@ -300,6 +300,17 @@ main > section:nth-of-type(n+3) .post-list > li { --base-delay: 0.35s; }
   }
 }
 
+/* Image Ink Settle >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Added by ImageInk.astro when a still-loading image arrives. */
+@keyframes ink-settle {
+  from {
+    filter: blur(10px) grayscale(0.7) contrast(0.85);
+  }
+}
+.ink-settle {
+  animation: ink-settle 0.9s var(--ease-ink) both;
+}
+
 /* Reading Progress >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* A single vermilion hairline across the top of a post, driven by scroll.
  * No script; browsers without scroll timelines simply don't show it. */

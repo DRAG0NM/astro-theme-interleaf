@@ -1,0 +1,24 @@
+<!--
+  Post images settle onto the page like ink: when an image that was still
+  loading arrives, it starts soft and pale over its colour placeholder
+  (LQIP) and sharpens into place. Cached images just appear.
+-->
+<script>
+function setup() {
+  const content = document.getElementById('post-content')
+  if (!content || document.documentElement.classList.contains('reduce-motion')) {
+    return
+  }
+  for (const img of content.querySelectorAll<HTMLImageElement>('img')) {
+    if (img.complete && img.naturalWidth > 0) {
+      continue
+    }
+    img.addEventListener('load', () => {
+      img.classList.add('ink-settle')
+      img.addEventListener('animationend', () => img.classList.remove('ink-settle'), { once: true })
+    }, { once: true })
+  }
+}
+
+document.addEventListener('astro:page-load', setup)
+</script>

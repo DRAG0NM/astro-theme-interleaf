@@ -6,8 +6,10 @@ import Header from '@/components/Header.astro'
 import Navbar from '@/components/Navbar.astro'
 import CodeCopyButton from '@/components/Widgets/CodeCopyButton.astro'
 import GithubCard from '@/components/Widgets/GithubCard.astro'
+import ImageInk from '@/components/Widgets/ImageInk.astro'
 import ImageZoom from '@/components/Widgets/ImageZoom.astro'
 import MediaEmbed from '@/components/Widgets/MediaEmbed.astro'
+import ReadingPosition from '@/components/Widgets/ReadingPosition.astro'
 // Search is disabled for now; restore this import and <Search /> below to enable it.
 // import Search from '@/components/Widgets/Search.astro'
 import Sidenotes from '@/components/Widgets/Sidenotes.astro'
@@ -65,7 +67,9 @@ const MarginBottom = isPost && themeConfig.comment.enabled
     <GithubCard />
     <MediaEmbed />
     <ImageZoom />
+    <ImageInk />
     {/* <Search /> */}
     <Sidenotes />
+    <ReadingPosition />
   </body>
 </html>
