@@ -8,6 +8,9 @@ interface Translation {
   tags: string
   about: string
   toc: string
+  search: string
+  searchPlaceholder: string
+  searchEmpty: string
 }
 
 export const ui: Record<Language, Translation> = {
@@ -19,6 +22,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Schlagwörter',
     about: 'Über',
     toc: 'Inhaltsverzeichnis',
+    search: 'Suchen',
+    searchPlaceholder: 'Beiträge durchsuchen…',
+    searchEmpty: 'Nichts gefunden',
   },
   'en': {
     title: 'Pianpker',
@@ -28,6 +34,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'About',
     toc: 'Table of Contents',
+    search: 'Search',
+    searchPlaceholder: 'Search posts…',
+    searchEmpty: 'No results',
   },
   'es': {
     title: 'Pianpker',
@@ -37,6 +46,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Etiquetas',
     about: 'Sobre',
     toc: 'Índice',
+    search: 'Buscar',
+    searchPlaceholder: 'Buscar artículos…',
+    searchEmpty: 'Sin resultados',
   },
   'fr': {
     title: 'Pianpker',
@@ -46,6 +58,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Étiquettes',
     about: 'À propos',
     toc: 'Table des matières',
+    search: 'Rechercher',
+    searchPlaceholder: 'Rechercher des articles…',
+    searchEmpty: 'Aucun résultat',
   },
   'ja': {
     title: 'Pianpker',
@@ -55,6 +70,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'タグ',
     about: '概要',
     toc: '目次',
+    search: '検索',
+    searchPlaceholder: '記事を検索…',
+    searchEmpty: '見つかりませんでした',
   },
   'ko': {
     title: 'Pianpker',
@@ -64,6 +82,9 @@ export const ui: Record<Language, Translation> = {
     tags: '태그',
     about: '소개',
     toc: '목차',
+    search: '검색',
+    searchPlaceholder: '글 검색…',
+    searchEmpty: '결과 없음',
   },
   'pl': {
     title: 'Pianpker',
@@ -73,6 +94,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tagi',
     about: 'O stronie',
     toc: 'Spis treści',
+    search: 'Szukaj',
+    searchPlaceholder: 'Szukaj wpisów…',
+    searchEmpty: 'Brak wyników',
   },
   'pt': {
     title: 'Pianpker',
@@ -82,6 +106,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Tags',
     about: 'Sobre',
     toc: 'Sumário',
+    search: 'Pesquisar',
+    searchPlaceholder: 'Pesquisar artigos…',
+    searchEmpty: 'Nenhum resultado',
   },
   'ru': {
     title: 'Pianpker',
@@ -91,6 +118,9 @@ export const ui: Record<Language, Translation> = {
     tags: 'Теги',
     about: 'О себе',
     toc: 'Оглавление',
+    search: 'Поиск',
+    searchPlaceholder: 'Поиск по записям…',
+    searchEmpty: 'Ничего не найдено',
   },
   'zh': {
     title: '落纸之间',
@@ -100,6 +130,9 @@ export const ui: Record<Language, Translation> = {
     tags: '标签',
     about: '关于',
     toc: '目录',
+    search: '搜索',
+    searchPlaceholder: '搜索文章…',
+    searchEmpty: '没有找到相关文章',
   },
   'zh-tw': {
     title: '落紙之間',
@@ -109,5 +142,8 @@ export const ui: Record<Language, Translation> = {
     tags: '標籤',
     about: '關於',
     toc: '目錄',
+    search: '搜尋',
+    searchPlaceholder: '搜尋文章…',
+    searchEmpty: '沒有找到相關文章',
   },
 }

@@ -132,6 +132,32 @@ html[data-theme-changing] [data-disable-theme-toggle-transition] {
   animation-timing-function: var(--ease-ink);
 }
 
+/* Language Switch >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+/* Switching language rewrites the page in place: the old script dissolves
+ * like ink lifting off wet paper, then the new script inks back in, a beat
+ * later. Button.astro marks the navigation with data-lang-switching. */
+@keyframes lang-out {
+  to {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+@keyframes lang-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+html[data-lang-switching]::view-transition-group(*) {
+  animation-duration: 0s !important;
+}
+html[data-lang-switching]::view-transition-old(*) {
+  animation: lang-out 0.38s cubic-bezier(0.4, 0, 1, 1) both !important;
+}
+html[data-lang-switching]::view-transition-new(*) {
+  animation: lang-in 0.8s var(--ease-ink) 0.16s both !important;
+}
+
 /* Content Progressive Animation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
 /* Text settles onto the page the way ink settles into paper: a short drift,
  * a soft focus that sharpens, no long slide. */

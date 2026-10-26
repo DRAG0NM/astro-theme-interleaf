@@ -1,9 +1,12 @@
 ---
 import type { Language } from '@/i18n/config'
 import LanguageSwitcherIcon from '@/assets/icons/language-switcher.svg'
+import SearchIcon from '@/assets/icons/search-icon.svg'
 import ThemeToggleIcon from '@/assets/icons/theme-toggle.svg'
 import { moreLocales, themeConfig } from '@/config'
 import { getNextGlobalLangPath, getNextSupportedLangPath } from '@/i18n/path'
+import { ui } from '@/i18n/ui'
+import { getPageInfo } from '@/utils/page'
 
 interface Props {
   supportedLangs: Language[]
@@ -16,6 +19,8 @@ const {
 
 const { supportedLangs } = Astro.props
 const currentPath = Astro.url.pathname
+const { currentLang } = getPageInfo(currentPath)
+const currentUI = ui[currentLang as keyof typeof ui] ?? {}
 
 // Check if there are other languages to switch
 const showLanguageSwitcher = moreLocales.length > 0
@@ -31,6 +36,21 @@ const nextUrl = supportedLangs.length > 0
   'lg:(fixed bottom-[min(10.27rem+1.92vw,12rem)] right-[max(5rem,calc(50vw-35rem))] top-auto w-14rem)',
 ]}
 >
+  <!-- Search -->
+  <button
+    id="search-button"
+    type="button"
+    class="aspect-square w-4 c-secondary active:scale-90 hover:c-primary"
+    aria-label={currentUI.search}
+    aria-haspopup="dialog"
+    aria-controls="search-dialog"
+  >
+    <SearchIcon
+      aria-hidden="true"
+      fill="currentColor"
+    />
+  </button>
+
   <!-- Language Switcher -->
   {showLanguageSwitcher && (
     <a
@@ -176,5 +196,25 @@ function handleSystemChange(event: MediaQueryListEvent) {
 }
 
 document.addEventListener('click', handleThemeToggle)
+
+// Language switch: mark the navigation so transition.css can play the
+// dissolve / re-ink animation, and carry the mark onto the incoming page.
+document.addEventListener('click', (e) => {
+  const root = document.documentElement
+  if (e.target instanceof Element && e.target.closest('#language-switcher')
+    && !root.classList.contains('reduce-motion')) {
+    root.setAttribute('data-lang-switching', '')
+    window.setTimeout(() => root.removeAttribute('data-lang-switching'), 2000)
+  }
+})
+document.addEventListener('astro:before-swap', (e) => {
+  if (!document.documentElement.hasAttribute('data-lang-switching')) {
+    return
+  }
+  e.newDocument.documentElement.setAttribute('data-lang-switching', '')
+  const clear = () => document.documentElement.removeAttribute('data-lang-switching')
+  e.viewTransition.finished.then(clear, clear)
+  window.setTimeout(clear, 2000)
+})
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleSystemChange)
 </script>
