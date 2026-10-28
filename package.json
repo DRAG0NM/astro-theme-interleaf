@@ -1,7 +1,7 @@
 {
   "name": "interleaf",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "packageManager": "pnpm@10.33.0",
   "description": "Interleaf — 落纸之间，字落有间，读来无距。",
   "author": "Drag0nM <tyloobylmm@outlook.com>",
